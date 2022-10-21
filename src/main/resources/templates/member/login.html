@@ -15,22 +15,24 @@
 
       <h1>LOGIN</h1>
 
-      <div class="input-box">
-        <label class="blind" for="input-id">id</label>
-        <input type="text" id="input-id" placeholder="아이디를 입력하세요"/>
-      </div>
+      <form action="/member/login" method="post">
+        <div class="input-box">
+          <label class="blind" for="input-id">id</label>
+          <input type="text" id="input-id" placeholder="아이디를 입력하세요"/>
+        </div>
 
-      <div class="input-box">
-        <label class="blind" for="input-pw">password</label>
-        <input type="password" id="input-pw" placeholder="비밀번호를 입력하세요"/>
-      </div>
+        <div class="input-box">
+          <label class="blind" for="input-pw">password</label>
+          <input type="password" id="input-pw" placeholder="비밀번호를 입력하세요"/>
+        </div>
 
-      <button class="btn-submit">login</button>
+        <button class="btn-submit" type="submit">login</button>
 
-      <div class="a-box">
-        <a href="#" title="비밀번호 찾기">비밀번호 찾기</a>
-        <a th:href="@{/member/regist}" title="회원가입 하기">회원가입 하기</a>
-      </div>
+        <div class="a-box">
+          <a href="#" title="비밀번호 찾기">비밀번호 찾기</a>
+          <a th:href="@{/member/regist}" title="회원가입 하기">회원가입 하기</a>
+        </div>
+      </form>
 
     </div>
   </div>
