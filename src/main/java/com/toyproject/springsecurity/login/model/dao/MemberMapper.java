@@ -11,4 +11,6 @@ public interface MemberMapper{
 
     /* 회원가입 등록한 member 권한 부여 */
     int insertMemberRole(String memberId);
+
+    String selectMemberById(String memberId);
 }

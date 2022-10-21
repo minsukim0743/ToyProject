@@ -28,4 +28,12 @@ public class MemberServiceImpl implements MemberService{
             int result2 = memberMapper.insertMemberRole(member.getMemberId());
         }
     }
+
+    @Override
+    public boolean selectMemberById(String memberId) {
+
+        String result = memberMapper.selectMemberById(memberId);
+
+        return result != null? true : false;
+    }
 }

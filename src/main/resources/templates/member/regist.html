@@ -17,7 +17,7 @@
             <tr>
                 <td style="width: 120px">* 아이디 </td>
                 <td><input type="text" maxlength="13" name="memberId" id="memberId" required></td>
-                <td style="width: 100px"><input type="button" value="중복확인" class="btn btn-bs" id="duplicationCheck"></td>
+                <td style="width: 100px"><input type="button" value="중복확인" id="duplicationCheck" class="btn btn-bs"></td>
             </tr>
             <tr>
                 <td>* 비밀번호</td>
@@ -91,5 +91,27 @@
         location.href = "/";
     }
 
+</script>
+<script>
+    if(document.getElementById("duplicationCheck")) {
+
+        const $duplication = document.getElementById("duplicationCheck");
+
+        $duplication.onclick = function() {
+            let memberId = document.getElementById("memberId").value.trim();
+
+            fetch("/member/idDupCheck", {
+            method: "POST",
+            headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: JSON.stringify({memberId: memberId})
+            })
+            .then(result => result.text())
+            .then(result => alert(result))
+            .catch((error) => error.text().then((res) => alert(res)));
+
+        }
+    }
 </script>
 </html>

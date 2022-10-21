@@ -49,4 +49,12 @@
           #{ memberId }, 'ROLE_USER'
         )
     </insert>
+
+    <select id="selectMemberById" resultType="string">
+        SELECT
+               MEMBER_ID
+          FROM MEMBER
+         WHERE MEMBER_YN = 'Y'
+           AND MEMBER_ID = #{ memberId }
+    </select>
 </mapper>

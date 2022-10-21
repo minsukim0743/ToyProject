@@ -5,12 +5,10 @@ import com.toyproject.springsecurity.login.model.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +25,29 @@ public class MemberController {
     public MemberController(PasswordEncoder passwordEncoder, MemberService memberService) {
         this.passwordEncoder = passwordEncoder;
         this.memberService = memberService;
+    }
+
+    @PostMapping("/idDupCheck")
+    public ResponseEntity<String> idDupCheck(@RequestBody MemberDTO member){
+
+        log.info("");
+        log.info("");
+        log.info("[MemberController] member ID check : " + member.getMemberId());
+
+        String result = "사용 가능한 아이디 입니다.";
+        log.info("[MemberController] Request Check ID : " + member.getMemberId());
+
+        if("".equals(member.getMemberId())) {
+            log.info("[MemberController] No Input Member ID");
+            result = "아이디를 입력해 주세요";
+        } else if(memberService.selectMemberById(member.getMemberId())) {
+            log.info("[MemberController] Already Exist");
+            result = "중복된 아이디가 존재합니다.";
+        }
+
+        log.info("[MemberController] checkDuplication ==========================================================");
+
+        return ResponseEntity.ok(result);
     }
 
     /* 회원가입 페이지 이동 */
@@ -58,4 +79,5 @@ public class MemberController {
 
         return "redirect:/";
     }
+
 }
