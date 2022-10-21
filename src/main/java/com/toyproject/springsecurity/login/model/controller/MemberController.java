@@ -27,6 +27,7 @@ public class MemberController {
         this.memberService = memberService;
     }
 
+    /* 회원가입시 아이디 중복체크 */
     @PostMapping("/idDupCheck")
     public ResponseEntity<String> idDupCheck(@RequestBody MemberDTO member){
 
@@ -38,10 +39,10 @@ public class MemberController {
         log.info("[MemberController] Request Check ID : " + member.getMemberId());
 
         if("".equals(member.getMemberId())) {
-            log.info("[MemberController] No Input Member ID");
-            result = "아이디를 입력해 주세요";
+            log.info("[MemberController] 아이디를 입력해 주세요");
+            result = "아이디를 입력해 주세요.";
         } else if(memberService.selectMemberById(member.getMemberId())) {
-            log.info("[MemberController] Already Exist");
+            log.info("[MemberController] 중복된 아이디가 존재합니다.");
             result = "중복된 아이디가 존재합니다.";
         }
 
