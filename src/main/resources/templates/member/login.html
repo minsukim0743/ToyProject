@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>login</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main/reset.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main/login.css}"/>
+</head>
+<body>
+
+  <!-- S: login -->
+  <div class="login">
+    <div class="login-form">
+
+      <h1>LOGIN</h1>
+
+      <div class="input-box">
+        <label class="blind" for="input-id">id</label>
+        <input type="text" id="input-id" placeholder="아이디를 입력하세요"/>
+      </div>
+
+      <div class="input-box">
+        <label class="blind" for="input-pw">password</label>
+        <input type="password" id="input-pw" placeholder="비밀번호를 입력하세요"/>
+      </div>
+
+      <button class="btn-submit">login</button>
+
+      <div class="a-box">
+        <a href="#" title="비밀번호 찾기">비밀번호 찾기</a>
+        <a th:href="@{/member/regist}" title="회원가입 하기">회원가입 하기</a>
+      </div>
+
+    </div>
+  </div>
+  <!-- E: login -->
+
+</body>
+<script th:inline="javascript">
+  // 등록, 수정, 삭제 시 alert창 띄워주기
+  let message = [[${message}]];
+
+  if(message != null && message !== '') {
+    alert(message);
+  }
+</script>
+</html>
