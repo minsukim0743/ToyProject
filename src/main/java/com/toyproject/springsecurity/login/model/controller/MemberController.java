@@ -81,4 +81,15 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @GetMapping("/loginFail")
+    public String loginFailPage(){
+
+        return "/member/loginFail";
+    }
+
+    @GetMapping("/loginSuccess")
+    public String loginSuccessPage(){
+
+        return "/member/loginSuccess";
+    }
 }

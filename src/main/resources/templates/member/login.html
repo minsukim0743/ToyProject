@@ -15,15 +15,15 @@
 
       <h1>LOGIN</h1>
 
-      <form action="/member/login" method="post">
+      <form id="loginForm" th:action="@{/member/login}" method="post">
         <div class="input-box">
           <label class="blind" for="input-id">id</label>
-          <input type="text" id="input-id" placeholder="아이디를 입력하세요"/>
+          <input type="text" id="input-id" name="memberId" placeholder="아이디를 입력하세요"/>
         </div>
 
         <div class="input-box">
           <label class="blind" for="input-pw">password</label>
-          <input type="password" id="input-pw" placeholder="비밀번호를 입력하세요"/>
+          <input type="password" id="input-pw" name="memberPwd" placeholder="비밀번호를 입력하세요"/>
         </div>
 
         <button class="btn-submit" type="submit">login</button>

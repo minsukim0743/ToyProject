@@ -15,10 +15,6 @@
         <result property="address" column="ADDRESS"/>
         <result property="enrollDate" column="ENROLL_DATE"/>
         <result property="memberStatus" column="MEMBER_YN"/>
-    </resultMap>
-
-    <resultMap id="memberRoleResultMap" type="MemberRoleDTO">
-        <id property="memberId" column="MEMBER_ID"/>
         <result property="memberRole" column="MEMBER_ROLE"/>
     </resultMap>
 
@@ -28,25 +24,13 @@
         (
           MEMBER_NO, MEMBER_ID, MEMBER_PWD
         , NICKNAME, PHONE, EMAIL
-        , ADDRESS, ENROLL_DATE, MEMBER_YN
+        , ADDRESS, ENROLL_DATE, MEMBER_YN, MEMBER_ROLE
         )
         VALUES
         (
           SEQ_MEMBER_NO.NEXTVAL, #{ memberId }, #{ memberPwd }
         , #{ nickname }, #{ phone }, #{ email }
-        , #{ address }, DEFAULT, 'Y'
-        )
-    </insert>
-
-    <insert id="insertMemberRole" parameterType="MemberRoleDTO">
-        INSERT
-          INTO MEMBER_ROLE
-        (
-          MEMBER_ID, MEMBER_ROLE
-        )
-        VALUES
-        (
-          #{ memberId }, 'ROLE_USER'
+        , #{ address }, DEFAULT, 'Y', 'ROLE_USER'
         )
     </insert>
 
@@ -57,4 +41,22 @@
          WHERE MEMBER_YN = 'Y'
            AND MEMBER_ID = #{ memberId }
     </select>
+
+    <select id="findByMemberId" resultType="MemberDTO">
+        SELECT
+               MEMBER_NO
+             , MEMBER_ID
+             , MEMBER_PWD
+             , NICKNAME
+             , PHONE
+             , EMAIL
+             , ADDRESS
+             , ENROLL_DATE
+             , MEMBER_YN
+             , MEMBER_ROLE
+         FROM MEMBER
+        WHERE MEMBER_YN = 'Y'
+          AND MEMBER_ID = #{ memberId }
+    </select>
+
 </mapper>

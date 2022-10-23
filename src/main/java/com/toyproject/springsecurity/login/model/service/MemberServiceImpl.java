@@ -17,18 +17,16 @@ public class MemberServiceImpl implements MemberService{
         this.memberMapper = memberMapper;
     }
 
+    /* 회원가입 */
     @Override
     @Transactional
     public void registMember(MemberDTO member) {
 
         log.info("[MemberService] Insert Member : " + member);
         int result = memberMapper.insertMember(member);
-
-        if(result > 0){
-            int result2 = memberMapper.insertMemberRole(member.getMemberId());
-        }
     }
 
+    /* 회원가입시 아이디 중복체크 */
     @Override
     public boolean selectMemberById(String memberId) {
 

@@ -1,11 +1,15 @@
 package com.toyproject.springsecurity.login.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Date;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MemberDTO implements UserDetails {
 
@@ -18,11 +22,11 @@ public class MemberDTO implements UserDetails {
     private String address;
     private Date enrollDate;
     private String memberStatus;
-    private List<MemberRoleDTO> memberRole;
+    private String memberRole;
 
     public MemberDTO() {}
 
-    public MemberDTO(Long memberNo, String memberId, String memberPwd, String nickname, String phone, String email, String address, Date enrollDate, String memberStatus, List<MemberRoleDTO> memberRole) {
+    public MemberDTO(Long memberNo, String memberId, String memberPwd, String nickname, String phone, String email, String address, Date enrollDate, String memberStatus, String memberRole) {
         this.memberNo = memberNo;
         this.memberId = memberId;
         this.memberPwd = memberPwd;
@@ -107,11 +111,11 @@ public class MemberDTO implements UserDetails {
         this.memberStatus = memberStatus;
     }
 
-    public List<MemberRoleDTO> getMemberRole() {
+    public String getMemberRole() {
         return memberRole;
     }
 
-    public void setMemberRole(List<MemberRoleDTO> memberRole) {
+    public void setMemberRole(String memberRole) {
         this.memberRole = memberRole;
     }
 
@@ -127,23 +131,29 @@ public class MemberDTO implements UserDetails {
                 ", address='" + address + '\'' +
                 ", enrollDate=" + enrollDate +
                 ", memberStatus='" + memberStatus + '\'' +
-                ", memberRole=" + memberRole +
+                ", memberRole='" + memberRole + '\'' +
                 '}';
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        Set<GrantedAuthority> roles = new HashSet<>();
+        for(String role : memberRole.split(",")) {
+            roles.add(new SimpleGrantedAuthority(role));
+        }
+
+        return roles;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return memberPwd;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return memberId;
     }
 
     // 계정 만료 여부
