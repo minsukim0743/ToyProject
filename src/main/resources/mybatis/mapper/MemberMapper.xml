@@ -16,6 +16,7 @@
         <result property="enrollDate" column="ENROLL_DATE"/>
         <result property="memberStatus" column="MEMBER_YN"/>
         <result property="memberRole" column="MEMBER_ROLE"/>
+        <result property="emailCode" column="EMAIL_CODE"/>
     </resultMap>
 
     <insert id="insertMember" parameterType="MemberDTO">
@@ -59,4 +60,33 @@
           AND MEMBER_ID = #{ memberId }
     </select>
 
+    <update id="updateEmailCode" parameterType="MemberDTO">
+        UPDATE
+               MEMBER
+           SET EMAIL_CODE = #{ emailCode }
+         WHERE EMAIL = #{ email }
+           AND MEMBER_ID = #{ memberId }
+    </update>
+
+    <select id="selectEmailCode" resultMap="memberResultMap" resultType="String">
+        SELECT
+               EMAIL_CODE
+          FROM MEMBER
+         WHERE MEMBER_ID = #{ memberId }
+           AND EMAIL = #{ email }
+    </select>
+
+    <update id="updatePwd" parameterType="MemberDTO">
+        UPDATE
+               MEMBER
+           SET MEMBER_PWD = #{ memberPwd }
+         WHERE EMAIL_CODE = #{ emailCode }
+    </update>
+
+    <select id="selectEmail" resultMap="memberResultMap">
+        SELECT
+               EMAIL
+          FROM MEMBER
+         WHERE MEMBER_ID = #{ memberId }
+    </select>
 </mapper>

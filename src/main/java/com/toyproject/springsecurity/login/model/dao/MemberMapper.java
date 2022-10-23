@@ -14,4 +14,12 @@ public interface MemberMapper{
 
     /* 로그인 아이디 찾기 */
     MemberDTO findByMemberId(String memberId);
+
+    int updateEmailCode(MemberDTO member);
+
+    MemberDTO selectEmailCode(MemberDTO member);
+
+    int updatePwd(MemberDTO member);
+
+    MemberDTO selectEmail(MemberDTO member);
 }

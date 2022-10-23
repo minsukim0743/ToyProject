@@ -92,4 +92,5 @@ public class MemberController {
 
         return "/member/loginSuccess";
     }
+
 }
