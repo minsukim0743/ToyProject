@@ -121,7 +121,6 @@ cmake-build-*/
 
 # IntelliJ
 out/
-application-aws.yml
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
