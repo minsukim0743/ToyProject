@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>success</title>
+    <title>로그인 성공</title>
 </head>
 <body>
-  <h1 style="text-align: center">로그인 성공!!</h1>
+<!-- S: header -->
+    <div class="header">
+        <div class="user_area">
+            <h3 style="text-align: center"><span style="text-align: center;" th:text="${ #authentication.getPrincipal().getNickname()}"></span>님의 방문을 환영합니다!!</h3>
+        </div>
+        <div class="logout_area" style="text-align: center">
+            <button onclick="location.href='/member/logout'">로그아웃</button>
+        </div>
+    </div>
+<!-- E: header -->
 </body>
 </html>

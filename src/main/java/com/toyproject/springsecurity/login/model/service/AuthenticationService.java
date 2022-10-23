@@ -18,6 +18,7 @@ public class AuthenticationService implements UserDetailsService {
         this.memberMapper = memberMapper;
     }
 
+    /* 로그인 아이디 찾기 */
     @Override
     public UserDetails loadUserByUsername(String memberId) {
 

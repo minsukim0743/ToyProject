@@ -11,5 +11,7 @@ public interface MemberMapper{
 
     /* 회원가입시 아이디 중복체크 */
     String selectMemberById(String memberId);
+
+    /* 로그인 아이디 찾기 */
     MemberDTO findByMemberId(String memberId);
 }
