@@ -13,6 +13,7 @@ public class TempKey {
         return init();
     }
 
+    /* 랜덤 인증번호 발송 */
     private String init(){
         Random ran = new Random();
         StringBuffer sb = new StringBuffer();
