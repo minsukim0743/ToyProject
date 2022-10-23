@@ -19,6 +19,7 @@
         <result property="emailCode" column="EMAIL_CODE"/>
     </resultMap>
 
+    <!-- 회원가입 -->
     <insert id="insertMember" parameterType="MemberDTO">
         INSERT
           INTO MEMBER
@@ -35,6 +36,7 @@
         )
     </insert>
 
+    <!-- 회원가입시 아이디 중복체크 -->
     <select id="selectMemberById" resultType="string">
         SELECT
                MEMBER_ID
@@ -43,6 +45,7 @@
            AND MEMBER_ID = #{ memberId }
     </select>
 
+    <!-- 로그인 아이디 찾기 -->
     <select id="findByMemberId" resultType="MemberDTO">
         SELECT
                MEMBER_NO
@@ -60,6 +63,7 @@
           AND MEMBER_ID = #{ memberId }
     </select>
 
+    <!-- DB 이메일 인증코드 설정 -->
     <update id="updateEmailCode" parameterType="MemberDTO">
         UPDATE
                MEMBER
@@ -68,6 +72,7 @@
            AND MEMBER_ID = #{ memberId }
     </update>
 
+    <!-- 이메일 인증코드 조회 -->
     <select id="selectEmailCode" resultMap="memberResultMap" resultType="String">
         SELECT
                EMAIL_CODE
@@ -76,6 +81,7 @@
            AND EMAIL = #{ email }
     </select>
 
+    <!-- 비밀번호 재설정 -->
     <update id="updatePwd" parameterType="MemberDTO">
         UPDATE
                MEMBER
@@ -83,6 +89,7 @@
          WHERE EMAIL_CODE = #{ emailCode }
     </update>
 
+    <!-- 이메일 조회 -->
     <select id="selectEmail" resultMap="memberResultMap">
         SELECT
                EMAIL

@@ -28,10 +28,12 @@ public class EmailServiceImpl implements EmailService{
         this.mailSender = mailSender;
     }
 
+    /* DB 이메일 인증코드 설정 */
     @Override
     @Transactional
     public int updateEmailCode(MemberDTO member) throws MessagingException, UnsupportedEncodingException {
 
+        /* 랜덤 인증코드를 member EmailCode에 set한다. */
         String emailCode = new TempKey().getKey(10, false);
         member.setEmailCode(emailCode);
 
@@ -39,8 +41,10 @@ public class EmailServiceImpl implements EmailService{
         log.info("");
         log.info("[EmailServiceImpl] memberEmailCode " + member.getEmailCode());
 
+        /* 이메일 인증코드 설정한다. */
         int result = memberMapper.updateEmailCode(member);
 
+        /* 이메일 인증코드 설정 성공시 */
         if(result > 0){
             MailHandler sendMail = new MailHandler(mailSender);
             sendMail.setSubject("[인증 이메일입니다.]");
@@ -58,6 +62,7 @@ public class EmailServiceImpl implements EmailService{
         return result;
     }
 
+    /* 이메일 인증코드 조회 */
     @Override
     public MemberDTO selectEmailCode(MemberDTO member) {
 
@@ -66,6 +71,7 @@ public class EmailServiceImpl implements EmailService{
         return emailCode;
     }
 
+    /* 비밀번호 재설정 */
     @Override
     @Transactional
     public int updatePwd(MemberDTO member) {
@@ -75,6 +81,7 @@ public class EmailServiceImpl implements EmailService{
         return result;
     }
 
+    /* 이메일 조회 */
     @Override
     public MemberDTO selectEmail(MemberDTO member) {
 
