@@ -1,6 +1,9 @@
 package com.toyproject.springsecurity.login.model.controller;
 
+import com.google.gson.Gson;
+import com.toyproject.springsecurity.login.model.dto.CommentDTO;
 import com.toyproject.springsecurity.login.model.dto.MemberDTO;
+import com.toyproject.springsecurity.login.model.service.CommentService;
 import com.toyproject.springsecurity.login.model.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,9 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Controller
 @RequestMapping("/member/*")
@@ -20,11 +26,13 @@ public class MemberController {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final PasswordEncoder passwordEncoder;
     private final MemberService memberService;
+    private final CommentService commentService;
 
     @Autowired
-    public MemberController(PasswordEncoder passwordEncoder, MemberService memberService) {
+    public MemberController(PasswordEncoder passwordEncoder, MemberService memberService, CommentService commentService) {
         this.passwordEncoder = passwordEncoder;
         this.memberService = memberService;
+        this.commentService = commentService;
     }
 
     /* 회원가입시 아이디 중복체크 */
@@ -86,11 +94,47 @@ public class MemberController {
 
         return "/member/loginFail";
     }
-
+    
     @GetMapping("/loginSuccess")
-    public String loginSuccessPage(){
+    public ModelAndView loginSuccessPage(ModelAndView mv){
+        
+        // 댓글 개수 조회하기
+        int totalCount = commentService.selectTotalCount();
 
-        return "/member/loginSuccess";
+        mv.addObject("totalCount", totalCount);
+        mv.setViewName("/member/loginSuccess");
+
+        return mv;
+    }
+
+    // 댓글 등록하기
+    @PostMapping("/commentInsert")
+    @ResponseBody
+    public int commentInsert(@ModelAttribute CommentDTO comment){
+
+        log.info("");
+        log.info("");
+        log.info("[commentInsert]" + comment);
+
+        int result = commentService.commentInsert(comment);
+
+        return result;
+    }
+
+    // 댓글 리스트 조회
+    @GetMapping("/commentList")
+    @ResponseBody
+    public String commentList(){
+
+        Gson gson = new Gson();
+
+        List<CommentDTO> commentList = commentService.commentList();
+
+        log.info("");
+        log.info("");
+        log.info("[commentList]" + commentList);
+
+        return gson.toJson(commentList);
     }
 
 }

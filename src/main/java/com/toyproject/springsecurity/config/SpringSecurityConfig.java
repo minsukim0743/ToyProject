@@ -47,15 +47,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //권한별 접근 페이지 설정
         http
-                .authorizeRequests()
-                .mvcMatchers("/**", "/member/**").permitAll()
+                .authorizeRequests() // 리소스의 권한 설정
+                .mvcMatchers("/**", "/member/**").permitAll() // antMatchers 설정한 리소스의 접근을 인증절차 없이 허용한다는 의미
                 .and()
                 .csrf().disable();
 
         //로그인 로그아웃 설정
         http
                 .formLogin()
-                .loginPage("/member/login")             //커스텀 로그인 페이지 사용
+                .loginPage("/member/login")             // 커스텀 로그인 페이지 사용
                 .defaultSuccessUrl("/member/loginSuccess") //로그인 성공시 이동 페이지
                 .failureUrl("/member/loginFail") // 로그인 실패시 이동 페이지
                 .usernameParameter("memberId")			// 아이디 파라미터명 설정

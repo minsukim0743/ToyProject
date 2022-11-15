@@ -4,6 +4,7 @@ import com.toyproject.springsecurity.login.model.dao.MemberMapper;
 import com.toyproject.springsecurity.login.model.dto.MemberDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ public class MemberServiceImpl implements MemberService{
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final MemberMapper memberMapper;
 
+    @Autowired
     public MemberServiceImpl(MemberMapper memberMapper) {
         this.memberMapper = memberMapper;
     }

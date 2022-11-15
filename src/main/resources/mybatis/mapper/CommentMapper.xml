@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.toyproject.springsecurity.login.model.dao.CommentMapper">
+
+    <resultMap id="commentResultMap" type="CommentDTO">
+        <id property="commentNo" column="COMMENT_NO"/>
+        <result property="content" column="CONTENT"/>
+        <result property="writer" column="WRITER"/>
+        <result property="regDate" column="REG_DATE"/>
+    </resultMap>
+
+    <!-- 댓글 등록하기 -->
+    <insert id="commentInsert">
+        INSERT
+          INTO POST_COMMENT
+        (
+          COMMENT_NO
+        , CONTENT
+        , WRITER
+        , REG_DATE
+        )
+        VALUES
+        (
+          SEQ_COMMENT_NO.NEXTVAL
+        , #{ content }
+        , #{ writer }
+        , TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+        )
+    </insert>
+
+    <!-- 댓글 리스트 조회하기 -->
+    <select id="commentList" resultMap="commentResultMap">
+        SELECT
+               COMMENT_NO
+             , CONTENT
+             , WRITER
+             , REG_DATE
+          FROM POST_COMMENT
+         ORDER BY REG_DATE ASC
+    </select>
+
+    <!-- 댓글 개수 조회하기 -->
+    <select id="selectTotalCount" resultType="_int">
+        SELECT
+               COUNT(*)
+          FROM POST_COMMENT
+    </select>
+</mapper>
