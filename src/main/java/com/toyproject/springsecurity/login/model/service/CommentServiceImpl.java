@@ -4,6 +4,7 @@ import com.toyproject.springsecurity.login.model.dao.CommentMapper;
 import com.toyproject.springsecurity.login.model.dto.CommentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -28,6 +29,7 @@ public class CommentServiceImpl implements CommentService {
 
     // 댓글 등록하기
     @Override
+    @Transactional
     public int commentInsert(CommentDTO comment) {
 
         return commentMapper.commentInsert(comment);

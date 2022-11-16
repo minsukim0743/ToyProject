@@ -8,43 +8,36 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/main/reset.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main/loginSuccess.css}"/>
 </head>
 <body>
 <!-- S: header -->
     <div class="header">
-        <div class="user_area">
-            <h3 style="text-align: center"><span style="text-align: center;" th:text="${ #authentication.getPrincipal().getNickname()}"></span>님의 방문을 환영합니다!!</h3>
-        </div>
         <div class="logout_area" style="text-align: center">
             <button onclick="location.href='/member/logout'">로그아웃</button>
+        </div>
+        <div class="user_area">
+            <h2><span style="text-align: center;" th:text="${ #authentication.getPrincipal().getNickname()}"></span>님 환영합니다.</h2>
         </div>
     </div>
 <!-- E: header -->
 
 <!-- S: container -->
-    <div class="container">
-        <label for="content">댓글 개수 : <span th:text="${ totalCount }"></span></label>
-        <form name="commentInsertForm">
+    <div id="form-commentInfo">
+        <form name="commentInsertForm" class="commentInsertForm">
+            <div class="commentCount">
+                댓글 <span th:text="${ totalCount }"></span> 개
+            </div>
             <div class="input-group">
                 <input type="hidden" name="writer" th:value="${ #authentication.getPrincipal().getNickname() }">
-                <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력해주세요.">
+                <input type="text" id="comment-input" name="content" placeholder="내용을 입력해주세요.">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
+                    <button class="btn btn-default" type="button" id="commentInsertBtn" name="commentInsertBtn">등록</button>
                 </span>
             </div>
         </form>
-    </div>
-
-    <div class="container">
         <div class="commentList">
-            <table id="commentTable">
-                <thead>
-                    <tr>
-                        <th>댓글 내용</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
-                    </tr>
-                </thead>
+            <table id="commentTable" class="comments-table">
                 <tbody>
                 </tbody>
             </table>
@@ -79,13 +72,15 @@ function commentList(){
             for(let idx in commentList){
 
                 let $tr = $("<tr>");
-                let $content = $('<td>').text(commentList[idx].content);
-                let $writer = $('<td>').text(commentList[idx].writer);
-                let $regDate = $('<td>').text(commentList[idx].regDate);
+                let $td = $('<td class="writer-regDate">');
+                let $writer = $('<p class="writer">').text(commentList[idx].writer);
+                let $regDate = $('<p class="regDate">').text(commentList[idx].regDate);
+                let $content = $('<td class="content">').text(commentList[idx].content);
 
+                $tr.append($td);
+                $td.append($writer);
+                $td.append($regDate);
                 $tr.append($content);
-                $tr.append($writer);
-                $tr.append($regDate);
 
                 $table.append($tr);
 

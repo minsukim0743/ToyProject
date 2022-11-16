@@ -1,0 +1,162 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400&display=swap');
+
+body {
+
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+}
+a:hover{
+    text-decoration: none;
+}
+
+.header {
+    width: 100%;
+    height: 80px;
+    box-shadow: 5px 5px 10px rgba(200,200,200,0.1);
+    box-sizing: border-box;
+    position: relative;
+}
+
+.header .logout_area {
+    float: right;
+    position: relative;
+    margin-right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.header .logout_area > button {
+    padding: 4px 10px;
+    border: 1px solid #ccc;
+    background-color: #fafafa;
+    color: #777;
+    font-size: 12px;
+    cursor: pointer;
+}
+.header .logout_area > button:hover {
+    color: #fff;
+    background-color: #ccc;
+}
+.header .user_area {
+    margin-right: 20px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+}
+.header .user_area span {
+    font-weight: bold;
+}
+/* E: header */
+
+#form-commentInfo{
+    margin:0 auto;
+    width: 750px;
+    padding-bottom: 150px;
+}
+
+.comments-table{
+
+    margin-top: 5px;
+    width: 750px;
+}
+
+.comments-table tr{
+
+    height: 50px;
+    width: 750px;
+    border-bottom:1px solid rgb(220, 220, 220);
+
+}
+
+.writer-regDate {
+
+    line-height: 12px;
+    width: 135px;
+}
+
+.comments-table{
+    width: 100%;
+}
+
+.comments-table tr td{
+    vertical-align: middle;
+    height: 65px;
+}
+
+.comments-table .writer{
+
+    font-size: 16px;
+    font-weight: 500;
+    padding-top: 12px;
+
+}
+
+.comments-table .regDate{
+
+    font-size: 14px;
+    color: rgb(200, 200, 200);
+    padding-top: 10px;
+}
+
+.comments-table .content {
+
+    font-size: 15px;
+    padding: 0 10px 0 20px;
+
+}
+
+.comments-table .siren {
+
+    vertical-align: baseline;
+    text-align: center;
+    font-size: 15px;
+    padding-top: 20px;
+    border: 0px;
+    outline: 0px;
+    background: white;
+}
+
+.comments-table .delete {
+
+    vertical-align: baseline;
+    text-align: center;
+    font-size: 15px;
+    line-height: 8px;
+}
+
+.comments-table .siren-button {
+
+    border: 0px;
+    outline: 0px;
+    background: white;
+}
+
+#commentInsertBtn{
+    width: 65px;
+    height: 3em;;
+    font-size: 15px;
+    font-weight: bold;
+    border: 1px solid black;
+}
+
+.commentInsertForm{
+    padding-top: 15px;
+}
+
+.input-group{
+    padding-top: 15px;
+}
+
+#comment-input{
+    width: 680px;
+    height: 3em;
+}
+
+.commentList{
+    padding-top: 30px;
+}
+
+.commentCount{
+    font-size : 18px;
+}
