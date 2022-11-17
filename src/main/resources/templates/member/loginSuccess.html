@@ -30,7 +30,7 @@
             </div>
             <div class="input-group">
                 <input type="hidden" name="writer" th:value="${ #authentication.getPrincipal().getNickname() }">
-                <input type="text" id="comment-input" name="content" placeholder="내용을 입력해주세요.">
+                <input type="text" id="comment-input" class="content" name="content" placeholder="내용을 입력해주세요.">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button" id="commentInsertBtn" name="commentInsertBtn">등록</button>
                 </span>
@@ -52,6 +52,7 @@ $('[name=commentInsertBtn]').click(function(){ // 댓글 등록 버튼 클릭시
     let insertData = $('[name=commentInsertForm]').serialize(); // commentInsertForm의 내용을 가져옴
     commentInsert(insertData);
 });
+
 
 // 댓글 리스트
 function commentList(){
@@ -76,11 +77,13 @@ function commentList(){
                 let $writer = $('<p class="writer">').text(commentList[idx].writer);
                 let $regDate = $('<p class="regDate">').text(commentList[idx].regDate);
                 let $content = $('<td class="content">').text(commentList[idx].content);
+                let $commentNo = $('<input type="hidden" class="commentNo">').text(commentList[idx].commentNo);
 
                 $tr.append($td);
                 $td.append($writer);
                 $td.append($regDate);
                 $tr.append($content);
+                $tr.append($commentNo);
 
                 $table.append($tr);
 
@@ -104,7 +107,7 @@ function commentInsert(insertData) {
         success: function(data) {
             if (data == 1) {
                 commentList();
-                $('[name=content]').val(''); // 댓글 등록 성공시 foam 내용 초기화
+                $('.content').val(''); // 댓글 등록 성공시 foam 내용 초기화
             }
         },
 

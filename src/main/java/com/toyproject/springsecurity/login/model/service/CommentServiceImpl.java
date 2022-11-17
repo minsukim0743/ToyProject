@@ -42,5 +42,11 @@ public class CommentServiceImpl implements CommentService {
         return commentMapper.selectTotalCount();
     }
 
+    @Override
+    public List<CommentDTO> selectCommentList() {
+
+        return commentMapper.selectCommentList();
+    }
+
 
 }

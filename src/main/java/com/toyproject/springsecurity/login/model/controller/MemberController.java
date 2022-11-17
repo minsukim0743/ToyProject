@@ -100,8 +100,10 @@ public class MemberController {
         
         // 댓글 개수 조회하기
         int totalCount = commentService.selectTotalCount();
+        List<CommentDTO> commentList = commentService.selectCommentList();
 
         mv.addObject("totalCount", totalCount);
+        mv.addObject("commentList", commentList);
         mv.setViewName("/member/loginSuccess");
 
         return mv;

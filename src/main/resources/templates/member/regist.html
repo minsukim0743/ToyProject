@@ -9,6 +9,7 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/main/regist.css}">
 
   <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 </head>
 
 <body>
@@ -28,11 +29,6 @@
           <div class="input-box">
             <label for="memberPwd" class="required">비밀번호</label>
             <input type="password" maxlength="13" name="memberPwd" id="memberPwd" required />
-          </div>
-
-          <div class="input-box">
-            <label for="memberPwd2" class="required">비밀번호 확인</label>
-            <input type="password" maxlength="13" name="memberPwd2" id="memberPwd2" />
           </div>
 
           <div class="input-box">
@@ -107,22 +103,85 @@
   if(document.getElementById("duplicationCheck")) {
 
     const $duplication = document.getElementById("duplicationCheck");
-
+    const $id = document.getElementById("memberId");
     $duplication.onclick = function() {
-      let memberId = document.getElementById("memberId").value.trim();
 
-      fetch("/member/idDupCheck", {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        },
-        body: JSON.stringify({memberId: memberId})
-      })
-              .then(result => result.text())
-              .then(result => alert(result))
-              .catch((error) => error.text().then((res) => alert(res)));
+      if($id.value.length >= 5) {
+        let memberId = document.getElementById("memberId").value.trim();
 
+        fetch("/member/idDupCheck", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+          },
+          body: JSON.stringify({memberId: memberId})
+        })
+                .then(result => result.text())
+                .then(result => alert(result))
+                .catch((error) => error.text().then((res) => alert(res)));
+      } else {
+
+        alert("아이디를 5글자 이상 입력해주세요")
+        return false;
+      }
     }
   }
+
+$('.btn-submit').click(function(){
+
+    let id = $('#memberId').val().trim();
+    let memberPwd = $('#memberPwd').val().trim();
+    let nickname = $('#nickname').val().trim();
+    let phone = $('#phone').val();
+    let email = $('#email').val();
+    let searchZipCode = $('#searchZipCode').val();
+    let address1 = $('#address1').val();
+    let address2 = $('#address2').val();
+
+    if(id == "" || id == null){
+
+      alert("아이디를 입력해주세요.")
+      id.focus();
+      return false;
+
+    } else if(memberPwd == "" || memberPwd == null){
+
+      alert("비밀번호를 입력해주세요.");
+      memberPwd.focus();
+      return false;
+    } else if(nickname == "" || nickname == null){
+
+      alert("닉네임을 입력하세요.");
+      nickname.focus();
+      return false;
+    } else if(phone == "" || phone == null){
+
+      alert("번호를 입력하세요.");
+      phone.focus();
+      return false;
+    } else if(email == "" || email == null){
+
+      alert("이메일을 입력하세요.");
+      email.focus();
+      return false;
+    } else if(searchZipCode == "" || searchZipCode == null){
+
+      alert("우편번호를 입력하세요.");
+      searchZipCode.focus();
+      return false;
+    } else if(address1 == "" || address1 == null){
+
+      alert("주소를 입력하세요.");
+      address1.focus();
+      return false;
+    } else if(address2 == "" || address2 == null){
+
+      alert("상세주소를 입력하세요.");
+      address2.focus();
+      return false;
+    }
+
+    return true;
+});
 </script>
 </html>

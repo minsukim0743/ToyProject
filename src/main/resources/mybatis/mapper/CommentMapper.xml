@@ -48,4 +48,10 @@
                COUNT(*)
           FROM POST_COMMENT
     </select>
+
+    <select id="selectCommentList" resultMap="commentResultMap">
+        SELECT
+               *
+          FROM POST_COMMENT
+    </select>
 </mapper>
