@@ -46,7 +46,10 @@
 
 <!-- E: container -->
 
-<script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let loginWriter = $('#writer').val();
+
 $('[name=commentInsertBtn]').click(function(){ // 댓글 등록 버튼 클릭시
 
     let insertData = $('[name=commentInsertForm]').serialize(); // commentInsertForm의 내용을 가져옴
@@ -76,14 +79,19 @@ function commentList(){
                 let $writer = $('<p class="writer">').text(commentList[idx].writer);
                 let $regDate = $('<p class="regDate">').text(commentList[idx].regDate);
                 let $content = $('<td class="content">').text(commentList[idx].content);
-                let $delete = $('<a class="commentDelete" onclick="commentDelete('+ commentList[idx].commentNo + ',\''+commentList[idx].writer+'\');">삭제</a>');
+                let $delete = $('<td style="text-align: right"><a class="commentDelete" onclick="commentDelete('+ commentList[idx].commentNo + ',\''+commentList[idx].writer+'\');">삭제</a></td>');
                 let $commentNo = $('<input type="hidden" class="commentNo">').text(commentList[idx].commentNo);
+
+                let writer = commentList[idx].writer;
 
                 $tr.append($td);
                 $td.append($writer);
                 $td.append($regDate);
                 $tr.append($content);
-                $tr.append($delete);
+                $tr.append($delete)
+                if(loginWriter != writer){
+                    $delete.css("display", "none");
+                }
                 $tr.append($commentNo);
 
                 $table.append($tr);
@@ -123,8 +131,6 @@ $(document).ready(function(){
 // 댓글 삭제
 function commentDelete(commentNo, writer){
 
-    const loginWriter = $('#writer').val();
-
     if(loginWriter == writer){
 
         $.ajax({
@@ -136,12 +142,10 @@ function commentDelete(commentNo, writer){
                 commentList();
             }
         });
-    } else {
-
-        alert("본인이 작성한 댓글만 삭제가 가능합니다.");
     }
 
 }
+    /*]]>*/
 </script>
 </body>
 </html>
