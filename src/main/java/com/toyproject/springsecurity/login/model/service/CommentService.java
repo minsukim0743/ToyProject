@@ -16,5 +16,6 @@ public interface CommentService {
     // 댓글 개수 조회하기
     int selectTotalCount();
 
-    List<CommentDTO> selectCommentList();
+    // 댓글 삭제
+    int commentDelete(int commentNo);
 }

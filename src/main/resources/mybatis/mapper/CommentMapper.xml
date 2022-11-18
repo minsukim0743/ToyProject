@@ -49,9 +49,10 @@
           FROM POST_COMMENT
     </select>
 
-    <select id="selectCommentList" resultMap="commentResultMap">
-        SELECT
-               *
+    <!-- 댓글 삭제 -->
+    <delete id="commentDelete" parameterType="_int">
+        DELETE
           FROM POST_COMMENT
-    </select>
+         WHERE COMMENT_NO = #{ commentNo }
+    </delete>
 </mapper>

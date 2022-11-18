@@ -29,7 +29,7 @@
                 댓글 <span th:text="${ totalCount }"></span> 개
             </div>
             <div class="input-group">
-                <input type="hidden" name="writer" th:value="${ #authentication.getPrincipal().getNickname() }">
+                <input type="hidden" id="writer" name="writer" th:value="${ #authentication.getPrincipal().getNickname() }">
                 <input type="text" id="comment-input" class="content" name="content" placeholder="내용을 입력해주세요.">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button" id="commentInsertBtn" name="commentInsertBtn">등록</button>
@@ -52,7 +52,6 @@ $('[name=commentInsertBtn]').click(function(){ // 댓글 등록 버튼 클릭시
     let insertData = $('[name=commentInsertForm]').serialize(); // commentInsertForm의 내용을 가져옴
     commentInsert(insertData);
 });
-
 
 // 댓글 리스트
 function commentList(){
@@ -77,12 +76,14 @@ function commentList(){
                 let $writer = $('<p class="writer">').text(commentList[idx].writer);
                 let $regDate = $('<p class="regDate">').text(commentList[idx].regDate);
                 let $content = $('<td class="content">').text(commentList[idx].content);
+                let $delete = $('<a class="commentDelete" onclick="commentDelete('+ commentList[idx].commentNo + ',\''+commentList[idx].writer+'\');">삭제</a>');
                 let $commentNo = $('<input type="hidden" class="commentNo">').text(commentList[idx].commentNo);
 
                 $tr.append($td);
                 $td.append($writer);
                 $td.append($regDate);
                 $tr.append($content);
+                $tr.append($delete);
                 $tr.append($commentNo);
 
                 $table.append($tr);
@@ -104,11 +105,9 @@ function commentInsert(insertData) {
         type: 'POST',
         data: insertData,
 
-        success: function(data) {
-            if (data == 1) {
-                commentList();
-                $('.content').val(''); // 댓글 등록 성공시 foam 내용 초기화
-            }
+        success: function() {
+            commentList();
+            $('.content').val(''); // 댓글 등록 성공시 foam 내용 초기화
         },
 
         error: function(error){
@@ -121,6 +120,28 @@ $(document).ready(function(){
    commentList(); // 페이지 로딩시 댓글 목록 출력
 });
 
+// 댓글 삭제
+function commentDelete(commentNo, writer){
+
+    const loginWriter = $('#writer').val();
+
+    if(loginWriter == writer){
+
+        $.ajax({
+
+            url : "/member/commentDelete/" + commentNo,
+            type : "POST",
+            success : function(){
+
+                commentList();
+            }
+        });
+    } else {
+
+        alert("본인이 작성한 댓글만 삭제가 가능합니다.");
+    }
+
+}
 </script>
 </body>
 </html>

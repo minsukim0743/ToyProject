@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -100,7 +99,7 @@ public class MemberController {
         
         // 댓글 개수 조회하기
         int totalCount = commentService.selectTotalCount();
-        List<CommentDTO> commentList = commentService.selectCommentList();
+        List<CommentDTO> commentList = commentService.commentList();
 
         mv.addObject("totalCount", totalCount);
         mv.addObject("commentList", commentList);
@@ -137,6 +136,20 @@ public class MemberController {
         log.info("[commentList]" + commentList);
 
         return gson.toJson(commentList);
+    }
+
+    // 댓글 삭제
+    @PostMapping("/commentDelete/{commentNo}")
+    @ResponseBody
+    public int commentDelete(@PathVariable int commentNo){
+
+        log.info("");
+        log.info("");
+        log.info("[commentDelete]" + commentNo + "//////");
+
+        int result = commentService.commentDelete(commentNo);
+
+        return result;
     }
 
 }

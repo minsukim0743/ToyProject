@@ -42,10 +42,12 @@ public class CommentServiceImpl implements CommentService {
         return commentMapper.selectTotalCount();
     }
 
+    // 댓글 삭제
     @Override
-    public List<CommentDTO> selectCommentList() {
+    @Transactional
+    public int commentDelete(int commentNo) {
 
-        return commentMapper.selectCommentList();
+        return commentMapper.commentDelete(commentNo);
     }
 
 
