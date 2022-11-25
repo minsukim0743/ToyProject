@@ -89,10 +89,11 @@ function commentList(){
                 $td.append($regDate);
                 $tr.append($content);
                 $tr.append($delete)
+                $tr.append($commentNo);
+
                 if(loginWriter != writer){
                     $delete.css("display", "none");
                 }
-                $tr.append($commentNo);
 
                 $table.append($tr);
 
@@ -135,7 +136,7 @@ function commentDelete(commentNo, writer){
 
         $.ajax({
 
-            url : "/member/commentDelete/" + commentNo,
+            url : "/member/comments/" + commentNo,
             type : "POST",
             success : function(){
 

@@ -23,7 +23,7 @@ spring:
     host: smtp.naver.com
     port: 465
     username: minsukim0743
-    password: QC8RWNNUCM5P
+    password: YHBU7L5U81N5
     properties:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true

@@ -42,6 +42,7 @@ public class EmailController {
         return "/member/confirmEmail";
     }
 
+    /* 비밀번호 재설정 이메일 전송 */
     @PostMapping("/confirmEmail")
     public ModelAndView confirmEmail(ModelAndView mv, MemberDTO member, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
 

@@ -139,13 +139,13 @@ public class MemberController {
     }
 
     // 댓글 삭제
-    @PostMapping("/commentDelete/{commentNo}")
+    @PostMapping("/comments/{commentNo}")
     @ResponseBody
     public int commentDelete(@PathVariable int commentNo){
 
         log.info("");
         log.info("");
-        log.info("[commentDelete]" + commentNo + "//////");
+        log.info("[commentDelete]" + commentNo);
 
         int result = commentService.commentDelete(commentNo);
 
