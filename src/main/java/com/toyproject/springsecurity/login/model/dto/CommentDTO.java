@@ -6,16 +6,27 @@ public class CommentDTO {
     private String content;
     private String writer;
     private String regDate;
+    private int commentLike;
 
     public CommentDTO() {}
 
-    public CommentDTO(int commentNo, String content, String writer, String regDate) {
+    public CommentDTO(int commentNo, String content, String writer, String regDate, int commentLike) {
         this.commentNo = commentNo;
         this.content = content;
         this.writer = writer;
         this.regDate = regDate;
+        this.commentLike = commentLike;
     }
 
+    public int getCommentLike(){
+
+        return commentLike;
+    }
+
+    public void setCommentLike(int commentLike){
+
+        this.commentLike = commentLike;
+    }
     public int getCommentNo() {
         return commentNo;
     }
@@ -48,13 +59,13 @@ public class CommentDTO {
         this.regDate = regDate;
     }
 
+
     @Override
     public String toString() {
-        return "CommentDTO{" +
-                "commentNo=" + commentNo +
+        return  "commentNo=" + commentNo +
                 ", content='" + content + '\'' +
                 ", writer='" + writer + '\'' +
-                ", regDate=" + regDate +
-                '}';
+                ", regDate='" + regDate + '\'' +
+                ", commentLike=" + commentLike;
     }
 }

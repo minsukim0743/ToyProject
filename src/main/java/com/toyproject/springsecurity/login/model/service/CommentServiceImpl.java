@@ -9,11 +9,19 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+/**
+ * The type Comment service.
+ */
 @Service
 public class CommentServiceImpl implements CommentService {
 
     private final CommentMapper commentMapper;
 
+    /**
+     * Instantiates a new Comment service.
+     *
+     * @param commentMapper the comment mapper
+     */
     @Autowired
     public CommentServiceImpl(CommentMapper commentMapper) {
 
@@ -48,6 +56,18 @@ public class CommentServiceImpl implements CommentService {
     public int commentDelete(int commentNo) {
 
         return commentMapper.commentDelete(commentNo);
+    }
+
+    @Override
+    public void commentLike(int commentNo, String nickName) {
+
+        commentMapper.commentLike(commentNo, nickName);
+    }
+
+    @Override
+    public void commentLike2(int commentNo) {
+
+        commentMapper.commentLike2(commentNo);
     }
 
 

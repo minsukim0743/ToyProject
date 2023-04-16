@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -36,7 +37,7 @@ public class MemberController {
 
     /* 회원가입시 아이디 중복체크 */
     @PostMapping("/idDupCheck")
-    public ResponseEntity<String> idDupCheck(@RequestBody MemberDTO member){
+    public ResponseEntity<String> idDupCheck(@RequestBody MemberDTO member) {
 
         log.info("");
         log.info("");
@@ -45,10 +46,10 @@ public class MemberController {
         String result = "사용 가능한 아이디 입니다.";
         log.info("[MemberController] Request Check ID : " + member.getMemberId());
 
-        if("".equals(member.getMemberId())) {
+        if ("".equals(member.getMemberId())) {
             log.info("[MemberController] 아이디를 입력해 주세요");
             result = "아이디를 입력해 주세요.";
-        } else if(memberService.selectMemberById(member.getMemberId())) {
+        } else if (memberService.selectMemberById(member.getMemberId())) {
             log.info("[MemberController] 중복된 아이디가 존재합니다.");
             result = "중복된 아이디가 존재합니다.";
         }
@@ -60,14 +61,14 @@ public class MemberController {
 
     /* 회원가입 페이지 이동 */
     @GetMapping("/regist")
-    public String memberRegistPage(){
+    public String memberRegistPage() {
 
         return "/member/regist";
     }
 
     /* 회원가입 */
     @PostMapping("/regist")
-    public String memberRegist(@ModelAttribute MemberDTO member, RedirectAttributes rttr, HttpServletRequest request){
+    public String memberRegist(@ModelAttribute MemberDTO member, RedirectAttributes rttr, HttpServletRequest request) {
 
         /* 주소API를 사용하여 받아온 주소를 합쳐준다.*/
         String address = request.getParameter("zipCode") + " " + request.getParameter("address1") + " " + request.getParameter("address2");
@@ -89,14 +90,14 @@ public class MemberController {
     }
 
     @GetMapping("/loginFail")
-    public String loginFailPage(){
+    public String loginFailPage() {
 
         return "/member/loginFail";
     }
-    
+
     @GetMapping("/loginSuccess")
-    public ModelAndView loginSuccessPage(ModelAndView mv){
-        
+    public ModelAndView loginSuccessPage(ModelAndView mv) {
+
         // 댓글 개수 조회하기
         int totalCount = commentService.selectTotalCount();
         List<CommentDTO> commentList = commentService.commentList();
@@ -111,7 +112,7 @@ public class MemberController {
     // 댓글 등록하기
     @PostMapping("/commentInsert")
     @ResponseBody
-    public int commentInsert(@ModelAttribute CommentDTO comment){
+    public int commentInsert(@ModelAttribute CommentDTO comment) {
 
         log.info("");
         log.info("");
@@ -125,7 +126,7 @@ public class MemberController {
     // 댓글 리스트 조회
     @GetMapping("/commentList")
     @ResponseBody
-    public String commentList(){
+    public String commentList() {
 
         Gson gson = new Gson();
 
@@ -141,7 +142,7 @@ public class MemberController {
     // 댓글 삭제
     @PostMapping("/comments/{commentNo}")
     @ResponseBody
-    public int commentDelete(@PathVariable int commentNo){
+    public int commentDelete(@PathVariable int commentNo) {
 
         log.info("");
         log.info("");
@@ -150,6 +151,25 @@ public class MemberController {
         int result = commentService.commentDelete(commentNo);
 
         return result;
+    }
+
+    // 댓글 삭제
+    @PostMapping("/commentLike/{commentNo}")
+    @ResponseBody
+    public void commentLike(@PathVariable int commentNo, Principal principal) {
+
+        String nickName = principal.getName();
+
+        log.info("");
+        log.info("");
+        log.info("[commentDelete]" + commentNo);
+        log.info("[commentDelete]" + nickName);
+
+        // COMMENT_LIKE 테이블 추가
+        commentService.commentLike(commentNo, nickName);
+        // POST_COMMENT COMMENT_LIKE 컬럼 + 1
+        commentService.commentLike2(commentNo);
+
     }
 
 }

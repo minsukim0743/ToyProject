@@ -12,6 +12,12 @@
         <result property="regDate" column="REG_DATE"/>
     </resultMap>
 
+    <resultMap id="commentLikeResultMap" type="CommentLikeDTO">
+        <id property="commentNo" column="COMMENT_NO"></id>
+        <id property="memberNickName" column="MEMBER_NICKNAME"></id>
+        <result property="stateYn" column="STATE_YN"></result>
+    </resultMap>
+
     <!-- 댓글 등록하기 -->
     <insert id="commentInsert">
         INSERT
@@ -38,6 +44,7 @@
              , CONTENT
              , WRITER
              , REG_DATE
+             , COMMENT_LIKE
           FROM POST_COMMENT
          ORDER BY REG_DATE ASC
     </select>
@@ -55,4 +62,30 @@
           FROM POST_COMMENT
          WHERE COMMENT_NO = #{ commentNo }
     </delete>
+
+    <insert id="commentLike">
+        INSERT
+          INTO COMMENT_LIKE
+        (
+          COMMENT_NO
+        , MEMBER_NICKNAME
+        , STATE_YN
+        )
+        VALUES
+        (
+          #{ commentNo }
+        , #{ nickName }
+        , 'Y'
+        )
+    </insert>
+
+    <update id="commentLike2">
+
+        UPDATE POST_COMMENT A
+           SET A.COMMENT_LIKE = (SELECT COMMENT_LIKE
+                                   FROM POST_COMMENT
+                                  WHERE COMMENT_NO = #{ commentNo }
+                                ) + 1
+         WHERE COMMENT_NO = #{ commentNo }
+    </update>
 </mapper>

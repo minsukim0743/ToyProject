@@ -48,7 +48,7 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-    let loginWriter = $('#writer').val();
+    const loginWriter = $('#writer').val();
 
 $('[name=commentInsertBtn]').click(function(){ // 댓글 등록 버튼 클릭시
 
@@ -79,6 +79,7 @@ function commentList(){
                 let $writer = $('<p class="writer">').text(commentList[idx].writer);
                 let $regDate = $('<p class="regDate">').text(commentList[idx].regDate);
                 let $content = $('<td class="content">').text(commentList[idx].content);
+                let $commentLike = $('<td class="commentLike"><a class="commentLike" style="cursor: pointer" onclick="commentLike(' + commentList[idx].commentNo + ');">좋아요</a>');
                 let $delete = $('<td style="text-align: right"><a class="commentDelete" onclick="commentDelete('+ commentList[idx].commentNo + ',\''+commentList[idx].writer+'\');">삭제</a></td>');
                 let $commentNo = $('<input type="hidden" class="commentNo">').text(commentList[idx].commentNo);
 
@@ -88,7 +89,8 @@ function commentList(){
                 $td.append($writer);
                 $td.append($regDate);
                 $tr.append($content);
-                $tr.append($delete)
+                $tr.append($commentLike);
+                $tr.append($delete);
                 $tr.append($commentNo);
 
                 if(loginWriter != writer){
@@ -140,12 +142,26 @@ function commentDelete(commentNo, writer){
             type : "POST",
             success : function(){
 
+                alert('댓글이 삭제 되었습니다!');
                 commentList();
             }
         });
     }
-
 }
+
+    function commentLike(commentNo){
+
+        $.ajax({
+
+            url : "/member/commentLike/" + commentNo,
+            type : "POST",
+            success : function(){
+
+                alert('좋아요 성공!');
+                commentList();
+            }
+        });
+    }
     /*]]>*/
 </script>
 </body>

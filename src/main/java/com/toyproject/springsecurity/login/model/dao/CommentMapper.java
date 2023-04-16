@@ -19,4 +19,8 @@ public interface CommentMapper {
 
     // 댓글 삭제
     int commentDelete(int commentNo);
+
+    void commentLike(int commentNo, String nickName);
+
+    void commentLike2(int commentNo);
 }
