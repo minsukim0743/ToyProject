@@ -105,11 +105,20 @@ a:hover{
     padding: 0 10px 0 20px;
 
 }
+.comments-table .commentLike-delete{
+
+    vertical-align: middle;
+    height: 65px;
+    font-size: 15px;
+    line-height: 8px;
+    width: 320px;
+    cursor : pointer;
+ }
 
 .comments-table .commentDelete {
 
     vertical-align: baseline;
-    text-align: center;
+    text-align: right;
     font-size: 15px;
     line-height: 8px;
     width: 320px;

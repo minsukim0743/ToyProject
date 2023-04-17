@@ -38,7 +38,7 @@
         </form>
         <div class="commentList">
             <table id="commentTable" class="comments-table">
-                <tbody>
+                <tbody id="tableBody">
                 </tbody>
             </table>
         </div>
@@ -74,30 +74,42 @@ function commentList(){
 
             for(let idx in commentList){
 
-                let $tr = $("<tr>");
-                let $td = $('<td class="writer-regDate">');
-                let $writer = $('<p class="writer">').text(commentList[idx].writer);
-                let $regDate = $('<p class="regDate">').text(commentList[idx].regDate);
-                let $content = $('<td class="content">').text(commentList[idx].content);
-                let $commentLike = $('<td class="commentLike"><a class="commentLike" style="cursor: pointer" onclick="commentLike(' + commentList[idx].commentNo + ');">좋아요</a>');
-                let $delete = $('<td style="text-align: right"><a class="commentDelete" onclick="commentDelete('+ commentList[idx].commentNo + ',\''+commentList[idx].writer+'\');">삭제</a></td>');
-                let $commentNo = $('<input type="hidden" class="commentNo">').text(commentList[idx].commentNo);
+                // let $tr = $("<tr>");
+                // let $td = $('<td class="writer-regDate">');
+                // let $writer = $('<p class="writer">').text(commentList[idx].writer);
+                // let $regDate = $('<p class="regDate">').text(commentList[idx].regDate);
+                // let $content = $('<td class="content">').text(commentList[idx].content);
+                // let $commentLike = $('<a style="text-align: right" onclick="commentLike(' + commentList[idx].commentNo + ');">').text("좋아요");
+                // let $delete = $('<a style="text-align: right" onclick="commentDelete('+ commentList[idx].commentNo + ',\''+commentList[idx].writer+'\');">').text("삭제");
 
+                //
                 let writer = commentList[idx].writer;
 
-                $tr.append($td);
-                $td.append($writer);
-                $td.append($regDate);
-                $tr.append($content);
-                $tr.append($commentLike);
-                $tr.append($delete);
-                $tr.append($commentNo);
+                let tableTd = '<tr>';
 
-                if(loginWriter != writer){
-                    $delete.css("display", "none");
-                }
+                tableTd += '<td class="writer-regDate">';
+                tableTd += '<p class="writer">' + commentList[idx].writer + '</p>';
+                tableTd += '<p class="regDate">' + commentList[idx].regDate + '</p>';
+                tableTd += '<td class="content">' + commentList[idx].content + '</td>';
+                tableTd += '<td class="commentLike-delete">';
+                tableTd += '<a onclick="commentLike(' + commentList[idx].commentNo + ');">' + '좋아요 </a>' + commentList[idx].commentLike;
+                tableTd += '<a onclick="commentDelete('+ commentList[idx].commentNo + ',\'' + commentList[idx].writer+'\');">' + '삭제</a>';
 
-                $table.append($tr);
+                let $commentNo = $('<input type="hidden" class="commentNo">').text(commentList[idx].commentNo);
+
+                // $tr.append($td);
+                // $td.append($writer);
+                // $td.append($regDate);
+                // $tr.append($content);
+                // $tr.append($commentLike);
+                // $tr.append($delete);
+                // $tr.append($commentNo);
+
+                // if(loginWriter != writer){
+                //     $delete.css("display", "none");
+                // }
+
+                $table.append(tableTd);
 
             }
         },
@@ -149,19 +161,19 @@ function commentDelete(commentNo, writer){
     }
 }
 
-    function commentLike(commentNo){
+function commentLike(commentNo){
 
-        $.ajax({
+    $.ajax({
 
-            url : "/member/commentLike/" + commentNo,
-            type : "POST",
-            success : function(){
+        url : "/member/commentLike/" + commentNo,
+        type : "POST",
+        success : function(){
 
-                alert('좋아요 성공!');
-                commentList();
-            }
-        });
-    }
+            alert('좋아요 성공!');
+            commentList();
+        }
+    });
+}
     /*]]>*/
 </script>
 </body>
