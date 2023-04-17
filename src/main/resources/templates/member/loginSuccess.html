@@ -74,15 +74,6 @@ function commentList(){
 
             for(let idx in commentList){
 
-                // let $tr = $("<tr>");
-                // let $td = $('<td class="writer-regDate">');
-                // let $writer = $('<p class="writer">').text(commentList[idx].writer);
-                // let $regDate = $('<p class="regDate">').text(commentList[idx].regDate);
-                // let $content = $('<td class="content">').text(commentList[idx].content);
-                // let $commentLike = $('<a style="text-align: right" onclick="commentLike(' + commentList[idx].commentNo + ');">').text("좋아요");
-                // let $delete = $('<a style="text-align: right" onclick="commentDelete('+ commentList[idx].commentNo + ',\''+commentList[idx].writer+'\');">').text("삭제");
-
-                //
                 let writer = commentList[idx].writer;
 
                 let tableTd = '<tr>';
@@ -92,21 +83,11 @@ function commentList(){
                 tableTd += '<p class="regDate">' + commentList[idx].regDate + '</p>';
                 tableTd += '<td class="content">' + commentList[idx].content + '</td>';
                 tableTd += '<td class="commentLike-delete">';
-                tableTd += '<a onclick="commentLike(' + commentList[idx].commentNo + ');">' + '좋아요 </a>' + commentList[idx].commentLike;
-                tableTd += '<a onclick="commentDelete('+ commentList[idx].commentNo + ',\'' + commentList[idx].writer+'\');">' + '삭제</a>';
-
-                let $commentNo = $('<input type="hidden" class="commentNo">').text(commentList[idx].commentNo);
-
-                // $tr.append($td);
-                // $td.append($writer);
-                // $td.append($regDate);
-                // $tr.append($content);
-                // $tr.append($commentLike);
-                // $tr.append($delete);
-                // $tr.append($commentNo);
+                tableTd += '<p onclick="commentLike(' + commentList[idx].commentNo + ');">' + '좋아요 : ' + commentList[idx].commentLike + '</p>';
+                tableTd += '<p class="delete" onclick="commentDelete('+ commentList[idx].commentNo + ',\'' + commentList[idx].writer+'\');">' + '삭제</p>';
 
                 // if(loginWriter != writer){
-                //     $delete.css("display", "none");
+                //     .css("display", "none");
                 // }
 
                 $table.append(tableTd);

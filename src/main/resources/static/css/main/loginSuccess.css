@@ -107,21 +107,13 @@ a:hover{
 }
 .comments-table .commentLike-delete{
 
-    vertical-align: middle;
-    height: 65px;
     font-size: 15px;
-    line-height: 8px;
-    width: 320px;
-    cursor : pointer;
+    text-align: right;
+    width: 70px;
  }
 
-.comments-table .commentDelete {
+.comments-table .commentLike-delete p{
 
-    vertical-align: baseline;
-    text-align: right;
-    font-size: 15px;
-    line-height: 8px;
-    width: 320px;
     cursor : pointer;
 
 }
