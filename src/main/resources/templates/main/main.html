@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main/reset.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main/loginSuccess.css}"/>
+</head>
+<body>
+<!-- S: header -->
+<th:block layout:fragment="header" th:include="/fragments/header"></th:block>
+<!-- E: header -->
+
+<!-- S: container -->
+<div id="form-commentInfo">
+    <form name="commentInsertForm" class="commentInsertForm">
+        <div class="commentCount">
+            댓글 <span th:text="${ totalCount }"></span> 개
+        </div>
+        <div class="input-group">
+            <input type="hidden" id="writer" name="writer" th:value="${ #authentication.getPrincipal().getNickname() }">
+            <input type="text" id="comment-input" class="content" name="content" placeholder="내용을 입력해주세요.">
+            <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="commentInsertBtn"
+                            name="commentInsertBtn">등록</button>
+                </span>
+        </div>
+    </form>
+    <div class="commentList">
+        <table id="commentTable" class="comments-table">
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- E: container -->
+<script th:src="@{/js/main.js}" type="text/javascript"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/header/header.css}">
+  <div class="header">
+    <nav>
+      <ul>
+        <li><a th:href="@{/board}">자유 게시판</a></li>
+        <li><a href="">Hobby</a></li>
+        <li><a href="">Game</a></li>
+        <li><a href="">Dream</a></li>
+      </ul>
+    </nav>
+    <div class="logout_area" style="text-align: center">
+      <button onclick="location.href='/member/logout'">로그아웃</button>
+    </div>
+    <div class="user_area">
+      <span class="user" style="text-align:center;" th:text="${ #authentication.getPrincipal().getNickname()}"></span>
+    </div>
+  </div>
+</html>

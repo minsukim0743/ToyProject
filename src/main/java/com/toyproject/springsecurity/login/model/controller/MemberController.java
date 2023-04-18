@@ -92,10 +92,10 @@ public class MemberController {
     @GetMapping("/loginFail")
     public String loginFailPage() {
 
-        return "/member/loginFail";
+        return "/login/loginFail";
     }
 
-    @GetMapping("/loginSuccess")
+    @GetMapping("/main")
     public ModelAndView loginSuccessPage(ModelAndView mv) {
 
         // 댓글 개수 조회하기
@@ -104,7 +104,7 @@ public class MemberController {
 
         mv.addObject("totalCount", totalCount);
         mv.addObject("commentList", commentList);
-        mv.setViewName("/member/loginSuccess");
+        mv.setViewName("/main/main");
 
         return mv;
     }

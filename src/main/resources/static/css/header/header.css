@@ -1,0 +1,77 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400&display=swap');
+
+body {
+
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+}
+a:hover{
+    text-decoration: none;
+}
+
+.header {
+    width: 100%;
+    height: 80px;
+    box-shadow: 5px 5px 10px rgba(200,200,200,0.1);
+    box-sizing: border-box;
+    position: relative;
+}
+
+.header .logout_area {
+    float: right;
+    position: relative;
+    margin-right: 30px;
+    top: 50%;
+    transform: translateY(-91px);
+}
+
+.header .logout_area > button {
+    padding: 1px 10px;
+    border: 1px solid #ccc;
+    background-color: #fafafa;
+    color: #777;
+    font-size: 12px;
+    cursor: pointer;
+}
+.header .logout_area > button:hover {
+    color: #fff;
+    background-color: #ccc;
+}
+.header .user_area {
+    margin-right: 20px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-79px);
+    text-align: center;
+}
+.header .user_area span {
+    font-weight: bold;
+}
+
+.header > nav {
+    width:600px;
+    height:100%;
+}
+
+.header ul {
+    padding-left: 20px;
+    width:100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header ul > li {
+    font-size:20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.user{
+    float: right;
+    padding-right: 20px;
+    position: relative;
+    transform: translateY(-50%);
+}

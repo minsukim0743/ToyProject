@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Board</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/main/style.css}">
+    <link rel="stylesheet" th:href="@{/css/main/reset.css}">
+
+</head>
+<body>
+<th:block layout:fragment="header" th:include="/fragments/header"></th:block>
+<section class="ftco-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-15">
+                <div class="table-wrap">
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>글 번호</th>
+                            <th>작성자</th>
+                            <th id="contentHead">제목</th>
+                            <th>작성일</th>
+                            <th>비고</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="alert" role="alert">
+                            <th scope="row">001</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>markotto@email.com</td>
+                            <td></td>
+                        </tr>
+                        <tr class="alert" role="alert">
+                            <td>001</td>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>markotto@email.com</td>
+                            <td></td>
+                        </tr>
+                        <tr class="alert" role="alert" id="content">
+                            <td>001</td>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>markotto@email.com</td>
+                            <td></td>
+                        </tr>
+                        <tr class="alert" role="alert">
+                            <td>001</td>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>markotto@email.com</td>
+                            <td></td>
+                        </tr>
+                        <tr class="alert" role="alert">
+                            <td>001</td>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>markotto@email.com</td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
+

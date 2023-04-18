@@ -56,7 +56,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .formLogin()
                 .loginPage("/member/login")             // 커스텀 로그인 페이지 사용
-                .defaultSuccessUrl("/member/loginSuccess") //로그인 성공시 이동 페이지
+                .defaultSuccessUrl("/member/main") //로그인 성공시 이동 페이지
                 .failureUrl("/member/loginFail") // 로그인 실패시 이동 페이지
                 .usernameParameter("memberId")			// 아이디 파라미터명 설정
                 .passwordParameter("memberPwd")			// 패스워드 파라미터명 설정
