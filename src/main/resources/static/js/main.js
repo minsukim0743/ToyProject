@@ -10,7 +10,7 @@ $('[name=commentInsertBtn]').click(function () { // 댓글 등록 버튼 클릭�
 function commentList() {
 
     $.ajax({
-        url: "/main/commentList",
+        url: "/main/comments",
         type: "GET",
         contentType: 'application/json',
 

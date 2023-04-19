@@ -30,39 +30,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="alert" role="alert">
-                            <th scope="row">001</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>markotto@email.com</td>
-                            <td></td>
-                        </tr>
-                        <tr class="alert" role="alert">
-                            <td>001</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>markotto@email.com</td>
-                            <td></td>
-                        </tr>
-                        <tr class="alert" role="alert" id="content">
-                            <td>001</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>markotto@email.com</td>
-                            <td></td>
-                        </tr>
-                        <tr class="alert" role="alert">
-                            <td>001</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>markotto@email.com</td>
-                            <td></td>
-                        </tr>
-                        <tr class="alert" role="alert">
-                            <td>001</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>markotto@email.com</td>
+                        <tr class="alert" role="alert" th:each="freeBoard : ${freeBoardList}">
+                            <th scope="row" th:text="${freeBoard.no}"></th>
+                            <td th:text="${freeBoard.writer}"></td>
+                            <td th:text="${freeBoard.title}"></td>
+                            <td th:text="${freeBoard.registTime}"></td>
                             <td></td>
                         </tr>
                         </tbody>

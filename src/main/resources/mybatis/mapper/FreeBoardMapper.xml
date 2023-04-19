@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.toyproject.springsecurity.freeBoard.model.dao.FreeBoardMapper">
+
+    <resultMap id="freeBoardResultMap" type="FreeBoardDTO">
+        <id property="no" column="NO"></id>
+        <result property="title" column="TITLE"></result>
+        <result property="contents" column="CONTENTS"></result>
+        <result property="count" column="COUNT"></result>
+        <result property="registTime" column="REGIST_TIME"></result>
+        <result property="writer" column="WRITER"></result>
+        <result property="updateTime" column="UPDATE_TIME"></result>
+        <result property="deleteYn" column="DELETE_YN"></result>
+    </resultMap>
+
+    <select id="freeBoardList" resultMap="freeBoardResultMap">
+        SELECT * FROM FREE_BOARD
+    </select>
+
+    <select id="freeBoardCount" resultType="_int">
+        SELECT COUNT(*) FROM FREE_BOARD
+    </select>
+</mapper>

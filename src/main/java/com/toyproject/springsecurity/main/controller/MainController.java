@@ -56,7 +56,7 @@ public class MainController {
     }
 
     @ApiOperation(value = "댓글 조회", notes = "댓글 조회하는 Ajax 메소드")
-    @GetMapping("/main/commentList")
+    @GetMapping("/main/comments")
     @ResponseBody
     public String commentList() {
 
