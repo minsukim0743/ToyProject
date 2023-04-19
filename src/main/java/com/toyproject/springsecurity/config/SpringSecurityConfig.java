@@ -2,7 +2,7 @@ package com.toyproject.springsecurity.config;
 
 
 import com.toyproject.springsecurity.login.model.service.AuthenticationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,17 +12,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity // springSecurity를 사용하기위한 어노테이션
+@RequiredArgsConstructor
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationService authenticationService;
-    @Autowired
-    public SpringSecurityConfig(AuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
-    }
+    private final AuthenticationFailureHandler customFailureHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -56,8 +55,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .formLogin()
                 .loginPage("/member/login")             // 커스텀 로그인 페이지 사용
-                .defaultSuccessUrl("/member/main") //로그인 성공시 이동 페이지
-                .failureUrl("/member/loginFail") // 로그인 실패시 이동 페이지
+                .defaultSuccessUrl("/main") //로그인 성공시 이동 페이지
+                .failureHandler(customFailureHandler) // 로그인 실패시 이동 페이지
                 .usernameParameter("memberId")			// 아이디 파라미터명 설정
                 .passwordParameter("memberPwd")			// 패스워드 파라미터명 설정
                 .and()

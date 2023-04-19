@@ -1,4 +1,4 @@
-package com.toyproject.springsecurity.board.service;
+package com.toyproject.springsecurity.board.model.service;
 
 import org.springframework.stereotype.Service;
 

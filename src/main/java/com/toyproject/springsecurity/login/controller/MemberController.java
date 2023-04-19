@@ -1,10 +1,10 @@
-package com.toyproject.springsecurity.login.model.controller;
+package com.toyproject.springsecurity.login.controller;
 
-import com.google.gson.Gson;
-import com.toyproject.springsecurity.login.model.dto.CommentDTO;
 import com.toyproject.springsecurity.login.model.dto.MemberDTO;
-import com.toyproject.springsecurity.login.model.service.CommentService;
+import com.toyproject.springsecurity.main.model.service.CommentService;
 import com.toyproject.springsecurity.login.model.service.MemberService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/member/*")
@@ -35,7 +32,7 @@ public class MemberController {
         this.commentService = commentService;
     }
 
-    /* 회원가입시 아이디 중복체크 */
+    @ApiOperation(value = "회원가입시 ID 중복체크", notes = "회원가입시 입력 ID 중복체크 하는 메소드")
     @PostMapping("/idDupCheck")
     public ResponseEntity<String> idDupCheck(@RequestBody MemberDTO member) {
 
@@ -59,14 +56,14 @@ public class MemberController {
         return ResponseEntity.ok(result);
     }
 
-    /* 회원가입 페이지 이동 */
+    @ApiOperation(value = "회원가입 페이지 이동", notes = "회원가입 페이지로 이동하는 메소드")
     @GetMapping("/regist")
     public String memberRegistPage() {
 
         return "/member/regist";
     }
 
-    /* 회원가입 */
+    @ApiOperation(value = "회원가입", notes = "사용자 회원가입 메소드")
     @PostMapping("/regist")
     public String memberRegist(@ModelAttribute MemberDTO member, RedirectAttributes rttr, HttpServletRequest request) {
 
@@ -87,89 +84,6 @@ public class MemberController {
         rttr.addFlashAttribute("message", "회원 가입에 성공하였습니다.");
 
         return "redirect:/";
-    }
-
-    @GetMapping("/loginFail")
-    public String loginFailPage() {
-
-        return "/login/loginFail";
-    }
-
-    @GetMapping("/main")
-    public ModelAndView loginSuccessPage(ModelAndView mv) {
-
-        // 댓글 개수 조회하기
-        int totalCount = commentService.selectTotalCount();
-        List<CommentDTO> commentList = commentService.commentList();
-
-        mv.addObject("totalCount", totalCount);
-        mv.addObject("commentList", commentList);
-        mv.setViewName("/main/main");
-
-        return mv;
-    }
-
-    // 댓글 등록하기
-    @PostMapping("/commentInsert")
-    @ResponseBody
-    public int commentInsert(@ModelAttribute CommentDTO comment) {
-
-        log.info("");
-        log.info("");
-        log.info("[commentInsert]" + comment);
-
-        int result = commentService.commentInsert(comment);
-
-        return result;
-    }
-
-    // 댓글 리스트 조회
-    @GetMapping("/commentList")
-    @ResponseBody
-    public String commentList() {
-
-        Gson gson = new Gson();
-
-        List<CommentDTO> commentList = commentService.commentList();
-
-        log.info("");
-        log.info("");
-        log.info("[commentList]" + commentList);
-
-        return gson.toJson(commentList);
-    }
-
-    // 댓글 삭제
-    @PostMapping("/comments/{commentNo}")
-    @ResponseBody
-    public int commentDelete(@PathVariable int commentNo) {
-
-        log.info("");
-        log.info("");
-        log.info("[commentDelete]" + commentNo);
-
-        int result = commentService.commentDelete(commentNo);
-
-        return result;
-    }
-
-    // 댓글 삭제
-    @PostMapping("/commentLike/{commentNo}")
-    @ResponseBody
-    public void commentLike(@PathVariable int commentNo, Principal principal) {
-
-        String nickName = principal.getName();
-
-        log.info("");
-        log.info("");
-        log.info("[commentDelete]" + commentNo);
-        log.info("[commentDelete]" + nickName);
-
-        // COMMENT_LIKE 테이블 추가
-        commentService.commentLike(commentNo, nickName);
-        // POST_COMMENT COMMENT_LIKE 컬럼 + 1
-        commentService.commentLike2(commentNo);
-
     }
 
 }

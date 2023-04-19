@@ -1,9 +1,8 @@
-package com.toyproject.springsecurity.login.model.dao;
+package com.toyproject.springsecurity.main.model.dao;
 
-import com.toyproject.springsecurity.login.model.dto.CommentDTO;
+import com.toyproject.springsecurity.main.model.dto.CommentDTO;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Mapper

@@ -1,27 +1,18 @@
-package com.toyproject.springsecurity.login.model.service;
+package com.toyproject.springsecurity.main.model.service;
 
-import com.toyproject.springsecurity.login.model.dao.CommentMapper;
-import com.toyproject.springsecurity.login.model.dto.CommentDTO;
+import com.toyproject.springsecurity.main.model.dao.CommentMapper;
+import com.toyproject.springsecurity.main.model.dto.CommentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
-/**
- * The type Comment service.
- */
 @Service
 public class CommentServiceImpl implements CommentService {
 
     private final CommentMapper commentMapper;
 
-    /**
-     * Instantiates a new Comment service.
-     *
-     * @param commentMapper the comment mapper
-     */
     @Autowired
     public CommentServiceImpl(CommentMapper commentMapper) {
 

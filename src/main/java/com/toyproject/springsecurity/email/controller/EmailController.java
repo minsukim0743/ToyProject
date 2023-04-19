@@ -1,8 +1,9 @@
 package com.toyproject.springsecurity.email.controller;
 
 import com.toyproject.springsecurity.common.util.SessionUtil;
-import com.toyproject.springsecurity.email.service.EmailService;
+import com.toyproject.springsecurity.email.model.service.EmailService;
 import com.toyproject.springsecurity.login.model.dto.MemberDTO;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class EmailController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    /* 비밀번호 찾기 페이지 이동 */
+    @ApiOperation(value = "비밀번호 찾기 페이지 이동", notes = "비밀번호를 잊어버린 사용자 비밀번호 찾기 페이지 이동")
     @GetMapping("/confirmEmail")
     public String confirmEmailPage(){
 
@@ -43,6 +44,7 @@ public class EmailController {
     }
 
     /* 비밀번호 재설정 이메일 전송 */
+    @ApiOperation(value = "비밀번호 재설정을 위한 이메일 전송", notes = "비밀번호를 잊어버린 사용자가 등록된 이메일로 코드를 전송")
     @PostMapping("/confirmEmail")
     public ModelAndView confirmEmail(ModelAndView mv, MemberDTO member, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
 
@@ -86,7 +88,7 @@ public class EmailController {
         return mv;
     }
 
-    /* 비밀번호 재설정 */
+    @ApiOperation(value = "비밀번호 재설정", notes = "이메일 확인을 성공한 사용자가 비밀번호 재설정")
     @PostMapping("/updatePwd")
     public String sendEmail(MemberDTO member, HttpServletRequest request, HttpServletResponse response, RedirectAttributes rttr){
 
@@ -125,7 +127,7 @@ public class EmailController {
         } else {
 
             /* 실패시 Fail 페이지로 이동 */
-            url = "/member/emailFail";
+            rttr.addFlashAttribute("message", "인증코드가 틀립니다. 다시 확인하여 주세요.");
         }
 
         return url;

@@ -1,4 +1,4 @@
-package com.toyproject.springsecurity.email.service;
+package com.toyproject.springsecurity.email.model.service;
 
 import com.toyproject.springsecurity.email.common.MailHandler;
 import com.toyproject.springsecurity.email.common.TempKey;

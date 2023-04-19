@@ -1,4 +1,4 @@
-package com.toyproject.springsecurity.login.model.dto;
+package com.toyproject.springsecurity.main.model.dto;
 
 public class CommentLikeDTO {
 

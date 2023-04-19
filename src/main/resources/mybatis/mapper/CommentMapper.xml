@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.toyproject.springsecurity.login.model.dao.CommentMapper">
+<mapper namespace="com.toyproject.springsecurity.main.model.dao.CommentMapper">
 
     <resultMap id="commentResultMap" type="CommentDTO">
         <id property="commentNo" column="COMMENT_NO"/>

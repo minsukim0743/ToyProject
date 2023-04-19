@@ -1,4 +1,4 @@
-package com.toyproject.springsecurity.email.service;
+package com.toyproject.springsecurity.email.model.service;
 
 import com.toyproject.springsecurity.login.model.dto.MemberDTO;
 

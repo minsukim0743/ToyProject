@@ -10,7 +10,7 @@ $('[name=commentInsertBtn]').click(function () { // 댓글 등록 버튼 클릭�
 function commentList() {
 
     $.ajax({
-        url: "/member/commentList",
+        url: "/main/commentList",
         type: "GET",
         contentType: 'application/json',
 
@@ -54,7 +54,7 @@ function commentList() {
 // 댓글 등록
 function commentInsert(insertData) {
     $.ajax({
-        url: '/member/commentInsert',
+        url: '/main/commentInsert',
         type: 'POST',
         data: insertData,
 
@@ -80,7 +80,7 @@ function commentDelete(commentNo, writer) {
 
         $.ajax({
 
-            url: "/member/comments/" + commentNo,
+            url: "/main/comment/" + commentNo,
             type: "POST",
             success: function () {
 
@@ -98,7 +98,7 @@ function commentLike(commentNo) {
 
     $.ajax({
 
-        url: "/member/commentLike/" + commentNo,
+        url: "/main/commentLike/" + commentNo,
         type: "POST",
         success: function () {
 

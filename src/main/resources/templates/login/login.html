@@ -27,6 +27,10 @@
           <input type="password" id="input-pw" name="memberPwd" placeholder="비밀번호를 입력하세요"/>
         </div>
 
+        <span th:if="${error == 'true'}">
+          <p style="color: red" th:text="${exception}"></p>
+        </span>
+
         <button class="btn-submit" type="submit">login</button>
 
         <div class="a-box">
