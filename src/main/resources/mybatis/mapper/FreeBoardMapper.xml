@@ -17,10 +17,92 @@
     </resultMap>
 
     <select id="freeBoardList" resultMap="freeBoardResultMap">
-        SELECT * FROM FREE_BOARD
+        SELECT
+               NO
+             , TITLE
+             , CONTENTS
+             , COUNT
+             , REGIST_TIME
+             , WRITER
+             , UPDATE_TIME
+             , DELETE_YN
+          FROM FREE_BOARD
+        <where>
+            <if test="searchCondition == 'writer'">
+                WRITER = #{ searchValue }
+            </if>
+            <if test="searchCondition == 'title'">
+                TITLE LIKE '%' || #{ searchValue } || '%'
+            </if>
+            <if test="searchCondition == 'content'">
+                CONTENTS LIKE '%' || #{ searchValue } || '%'
+            </if>
+        </where>
+        ORDER BY NO DESC
     </select>
 
-    <select id="freeBoardCount" resultType="_int">
-        SELECT COUNT(*) FROM FREE_BOARD
+    <select id="freeBoardCount" resultType="_int" parameterType="hashmap">
+        SELECT
+               COUNT(*)
+          FROM FREE_BOARD
+        <where>
+            <if test="searchCondition == 'writer'">
+                WRITER = #{ searchValue }
+            </if>
+            <if test="searchCondition == 'content'">
+                CONTENTS = #{ searchValue }
+            </if>
+            <if test="searchCondition == 'title'">
+                TITLE = #{ searchValue }
+            </if>
+        </where>
     </select>
+
+    <insert id="freeBoardInsert">
+        INSERT
+          INTO FREE_BOARD
+        (
+          No
+        , TITLE
+        , CONTENTS
+        , COUNT
+        , REGIST_TIME
+        , WRITER
+        , UPDATE_TIME
+        , DELETE_YN
+        )
+        VALUES
+        (
+          SEQ_FREEBOARD_NO.NEXTVAL
+        , #{ title }
+        , #{ contents }
+        , 0
+        , TO_CHAR(SYSDATE, 'yyyy-MM-dd HH24:MI:SS')
+        , #{ writer }
+        , NULL
+        , 'N'
+        )
+    </insert>
+
+    <select id="freeBoardDetail" resultMap="freeBoardResultMap">
+        SELECT
+               NO
+             , TITLE
+             , CONTENTS
+             , COUNT
+             , REGIST_TIME
+             , WRITER
+             , UPDATE_TIME
+             , DELETE_YN
+        FROM FREE_BOARD
+       WHERE NO = #{ no }
+         AND DELETE_YN = 'N'
+    </select>
+
+    <update id="freeBoardDetailCount">
+        UPDATE
+               FREE_BOARD
+           SET COUNT = COUNT + 1
+         WHERE NO = #{ no }
+    </update>
 </mapper>

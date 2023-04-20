@@ -1,13 +1,21 @@
 package com.toyproject.springsecurity.freeBoard.model.dao;
 
+import com.toyproject.springsecurity.common.util.SelectCriteria;
 import com.toyproject.springsecurity.freeBoard.model.dto.FreeBoardDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface FreeBoardMapper {
-    List<FreeBoardDTO> freeBoardList();
+    List<FreeBoardDTO> freeBoardList(SelectCriteria selectCriteria);
 
-    int freeBoardCount();
+    int freeBoardCount(Map<String, String> searchMap);
+
+    void freeBoardInsert(FreeBoardDTO freeBoard);
+
+    FreeBoardDTO freeBoardDetail(int no);
+
+    void freeBoardDetailCount(int no);
 }

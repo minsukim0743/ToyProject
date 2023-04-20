@@ -8206,6 +8206,40 @@ h1, h2, h3, h4, h5,
     font-size: 12px;
     color: #dc3545; }
 
+#searchCondition, .btn{
+  width: 80px;
+  border: 1px solid #ced4da;
+  text-align: center;
+  height: 30px;
+}
+
+/* S: select */
+.select_type1 {
+  width: 100px;
+  border: 1px solid #ced4da;
+}
+.select_type1 option {
+  border: 1px solid #ced4da;
+}
+/* E: select */
+
+/* S: flex reset */
+.input-group {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+}
+.flex-center {
+  justify-content: center;
+}
+.flex-right {
+  justify-content: right;
+}
+.flex-left {
+  justify-content: left;
+}
+/* E: flex reset */
   /*#content, contentHead{*/
 
   /*  padding: 50px*/

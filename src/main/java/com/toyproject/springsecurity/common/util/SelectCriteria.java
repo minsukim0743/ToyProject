@@ -20,5 +20,7 @@ public class SelectCriteria {
     private int endPage;                // 마지막 페이지
     private int startRow;                // 조회해야 하는 행의 시작 수
     private int endRow;                    // 조회해야 하는 행의 마지막 수
+    private String searchCondition;		//검색 조건
+    private String searchValue;			//검색어
 
 }

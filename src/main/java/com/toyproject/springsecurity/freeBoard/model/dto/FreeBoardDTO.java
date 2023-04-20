@@ -7,14 +7,15 @@ public class FreeBoardDTO {
     private String title;
     private String contents;
     private int count;
-    private Date registTime;
+    private String registTime;
     private String writer;
-    private Date updateTime;
+    private String updateTime;
     private String deleteYn;
 
     public FreeBoardDTO(){}
 
-    public FreeBoardDTO(int no, String title, String contents, int count, Date registTime, String writer, Date updateTime, String deleteYn) {
+    public FreeBoardDTO(int no, String title, String contents, int count, String registTime, String writer,
+                        String updateTime, String deleteYn) {
         this.no = no;
         this.title = title;
         this.contents = contents;
@@ -58,11 +59,11 @@ public class FreeBoardDTO {
         this.count = count;
     }
 
-    public Date getRegistTime() {
+    public String getRegistTime() {
         return registTime;
     }
 
-    public void setRegistTime(Date registTime) {
+    public void setRegistTime(String registTime) {
         this.registTime = registTime;
     }
 
@@ -74,11 +75,11 @@ public class FreeBoardDTO {
         this.writer = writer;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 
