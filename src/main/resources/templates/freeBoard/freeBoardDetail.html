@@ -1,19 +1,79 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <title>Board</title>
+    <title>ToyProject</title>
     <meta charset="utf-8">
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <link rel="stylesheet" th:href="@{/css/main/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/common/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/freeBoard/freeBoardDetail.css}">
 
 </head>
 <body>
 <th:block layout:fragment="header" th:include="/fragments/header"></th:block>
 
+
 <p th:utext="${freeBoard.contents}"></p>
+<button th:if="${freeBoard.writer == #authentication.getPrincipal().getNickname()}">
+    <a th:href="@{/free-board/put/{no}(no=${freeBoard.no})}">수정</a>
+</button>
+
+<div id="form-commentInfo">
+    <form name="commentInsertForm" class="commentInsertForm">
+        <div class="commentCount">
+            댓글 <span th:text="${#lists.size(comments) }"></span> 개
+        </div>
+        <div class="input-group">
+            <input type="hidden" id="writer" name="writer" th:value="${ #authentication.getPrincipal().getNickname() }">
+            <input type="text" id="comment-input" class="content" name="content" placeholder="내용을 입력해주세요.">
+            <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="commentInsertBtn"
+                            name="commentInsertBtn">등록</button></span>
+        </div>
+    </form>
+    <div class="commentList">
+        <table id="commentTable" class="comments-table">
+            <tbody id="tableBody">
+                <tr th:each="comment : ${comments}">
+                    <td class="writer-regDate">
+                        <p class="writer" th:text="${comment.writer}"></p>
+                        <p class="regDate" th:text="${comment.regDate}"></p>
+                    </td>
+                    <td class="content" th:text="${comment.content}"></td>
+                    <td class="commentLike-delete" th:if="${comment.writer == #authentication.getPrincipal().getNickname()}">
+                        <button class="deleteBtn" th:onclick="commentDelete([[${comment.commentNo}]])">삭제</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
+<script th:inline="javascript">
+    const message = [[${message}]];
+
+    if(message != null && message != ''){
+
+        alert(message);
+    }
+
+    function commentDelete(commentNo) {
+
+        $.ajax({
+
+            url: "/main/comment/" + commentNo,
+            type: "POST",
+            success: function () {
+
+                alert('댓글이 삭제 되었습니다!');
+                commentList();
+            }, error: function () {
+
+                alert('본인이 작성한 댓글만 지울 수 있습니다.')
+            }
+        });
+    }
+</script>
 </html>
 

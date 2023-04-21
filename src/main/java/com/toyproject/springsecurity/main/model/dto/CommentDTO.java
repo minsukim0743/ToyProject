@@ -7,26 +7,21 @@ public class CommentDTO {
     private String writer;
     private String regDate;
     private int commentLike;
+    private int categoryNo;
+    private int writeNo;
 
     public CommentDTO() {}
 
-    public CommentDTO(int commentNo, String content, String writer, String regDate, int commentLike) {
+    public CommentDTO(int commentNo, String content, String writer, String regDate, int commentLike, int categoryNo, int writeNo) {
         this.commentNo = commentNo;
         this.content = content;
         this.writer = writer;
         this.regDate = regDate;
         this.commentLike = commentLike;
+        this.categoryNo = categoryNo;
+        this.writeNo = writeNo;
     }
 
-    public int getCommentLike(){
-
-        return commentLike;
-    }
-
-    public void setCommentLike(int commentLike){
-
-        this.commentLike = commentLike;
-    }
     public int getCommentNo() {
         return commentNo;
     }
@@ -59,13 +54,40 @@ public class CommentDTO {
         this.regDate = regDate;
     }
 
+    public int getCommentLike() {
+        return commentLike;
+    }
+
+    public void setCommentLike(int commentLike) {
+        this.commentLike = commentLike;
+    }
+
+    public int getCategoryNo() {
+        return categoryNo;
+    }
+
+    public void setCategoryNo(int categoryNo) {
+        this.categoryNo = categoryNo;
+    }
+
+    public int getWriteNo() {
+        return writeNo;
+    }
+
+    public void setWriteNo(int writeNo) {
+        this.writeNo = writeNo;
+    }
 
     @Override
     public String toString() {
-        return  "commentNo=" + commentNo +
+        return "CommentDTO{" +
+                "commentNo=" + commentNo +
                 ", content='" + content + '\'' +
                 ", writer='" + writer + '\'' +
                 ", regDate='" + regDate + '\'' +
-                ", commentLike=" + commentLike;
+                ", commentLike=" + commentLike +
+                ", categoryNo=" + categoryNo +
+                ", writeNo=" + writeNo +
+                '}';
     }
 }

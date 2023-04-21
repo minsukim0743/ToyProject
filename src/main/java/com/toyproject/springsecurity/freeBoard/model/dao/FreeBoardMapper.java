@@ -2,6 +2,7 @@ package com.toyproject.springsecurity.freeBoard.model.dao;
 
 import com.toyproject.springsecurity.common.util.SelectCriteria;
 import com.toyproject.springsecurity.freeBoard.model.dto.FreeBoardDTO;
+import com.toyproject.springsecurity.main.model.dto.CommentDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -18,4 +19,8 @@ public interface FreeBoardMapper {
     FreeBoardDTO freeBoardDetail(int no);
 
     void freeBoardDetailCount(int no);
+
+    int freeBoardUpdate(FreeBoardDTO freeBoard);
+
+    List<CommentDTO> freeBoardDetailCommentList(int no);
 }

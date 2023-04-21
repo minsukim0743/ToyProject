@@ -3,6 +3,7 @@ package com.toyproject.springsecurity.freeBoard.model.service;
 import com.toyproject.springsecurity.common.util.SelectCriteria;
 import com.toyproject.springsecurity.freeBoard.model.dao.FreeBoardMapper;
 import com.toyproject.springsecurity.freeBoard.model.dto.FreeBoardDTO;
+import com.toyproject.springsecurity.main.model.dto.CommentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,5 +48,18 @@ public class FreeBoardServiceImpl implements FreeBoardService {
     public void freeBoardDetailCount(int no) {
 
         freeBoardMapper.freeBoardDetailCount(no);
+    }
+
+    @Override
+    @Transactional
+    public int freeBoardUpdate(FreeBoardDTO freeBoard) {
+
+        return freeBoardMapper.freeBoardUpdate(freeBoard);
+    }
+
+    @Override
+    public List<CommentDTO> freeBoardDetailCommentList(int no) {
+
+        return freeBoardMapper.freeBoardDetailCommentList(no);
     }
 }

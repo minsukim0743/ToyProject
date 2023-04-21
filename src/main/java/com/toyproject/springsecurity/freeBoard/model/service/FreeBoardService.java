@@ -2,6 +2,7 @@ package com.toyproject.springsecurity.freeBoard.model.service;
 
 import com.toyproject.springsecurity.common.util.SelectCriteria;
 import com.toyproject.springsecurity.freeBoard.model.dto.FreeBoardDTO;
+import com.toyproject.springsecurity.main.model.dto.CommentDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -16,4 +17,8 @@ public interface FreeBoardService {
     FreeBoardDTO freeBoardDetail(int no);
 
     void freeBoardDetailCount(int no);
+
+    int freeBoardUpdate(FreeBoardDTO freeBoard);
+
+    List<CommentDTO> freeBoardDetailCommentList(int no);
 }

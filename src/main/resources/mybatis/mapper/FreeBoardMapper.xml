@@ -13,7 +13,22 @@
         <result property="registTime" column="REGIST_TIME"></result>
         <result property="writer" column="WRITER"></result>
         <result property="updateTime" column="UPDATE_TIME"></result>
-        <result property="deleteYn" column="DELETE_YN"></result>
+    </resultMap>
+
+    <resultMap id="commentResultMap" type="CommentDTO">
+        <id property="commentNo" column="COMMENT_NO"/>
+        <result property="content" column="CONTENT"/>
+        <result property="writer" column="WRITER"/>
+        <result property="regDate" column="REG_DATE"/>
+        <result property="categoryNo" column="CATEGORY_NO"/>
+        <result property="writeNo" column="WRITE_NO"/>
+    </resultMap>
+
+    <resultMap id="commentLikeResultMap" type="CommentLikeDTO">
+        <id property="commentNo" column="COMMENT_NO"></id>
+        <id property="memberNickName" column="MEMBER_NICKNAME"></id>
+        <result property="categoryNo" column="CATEGORY_NO"/>
+        <result property="writeNo" column="WRITE_NO"/>
     </resultMap>
 
     <select id="freeBoardList" resultMap="freeBoardResultMap">
@@ -105,4 +120,35 @@
            SET COUNT = COUNT + 1
          WHERE NO = #{ no }
     </update>
+
+    <update id="freeBoardUpdate">
+        UPDATE
+               FREE_BOARD
+        <trim prefix="SET" prefixOverrides=",">
+           <if test="contents != null and contents != ''">
+              , CONTENTS = #{ contents }
+           </if>
+            <if test="title != null and title != ''">
+              , TITLE = #{ title }
+            </if>
+              , UPDATE_TIME = TO_CHAR(SYSDATE, 'yyyy-MM-dd HH24:MI:SS')
+        </trim>
+         WHERE NO = #{ no }
+           AND WRITER = #{ writer }
+    </update>
+
+    <select id="freeBoardDetailCommentList" resultMap="commentResultMap">
+        SELECT
+               COMMENT_NO
+             , CONTENT
+             , WRITER
+             , REG_DATE
+             , COMMENT_LIKE
+             , CATEGORY_NO
+             , WRITE_NO
+         FROM  POST_COMMENT
+        WHERE  CATEGORY_NO = 1
+          AND  WRITE_NO = #{ no }
+        ORDER BY REG_DATE ASC
+    </select>
 </mapper>

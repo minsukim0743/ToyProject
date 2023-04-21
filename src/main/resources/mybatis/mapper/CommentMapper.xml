@@ -10,12 +10,15 @@
         <result property="content" column="CONTENT"/>
         <result property="writer" column="WRITER"/>
         <result property="regDate" column="REG_DATE"/>
+        <result property="categoryNo" column="CATEGORY_NO"/>
+        <result property="writeNo" column="WRITE_NO"/>
     </resultMap>
 
     <resultMap id="commentLikeResultMap" type="CommentLikeDTO">
         <id property="commentNo" column="COMMENT_NO"></id>
         <id property="memberNickName" column="MEMBER_NICKNAME"></id>
-        <result property="stateYn" column="STATE_YN"></result>
+        <result property="categoryNo" column="CATEGORY_NO"/>
+        <result property="writeNo" column="WRITE_NO"/>
     </resultMap>
 
     <!-- 댓글 등록하기 -->

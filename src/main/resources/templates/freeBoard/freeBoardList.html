@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
-    <link rel="stylesheet" th:href="@{/css/main/freeBoardList.css}">
-    <link rel="stylesheet" th:href="@{/css/main/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/freeBoard/freeBoardList.css}">
+    <link rel="stylesheet" th:href="@{/css/common/reset.css}">
 
 </head>
 <body>
@@ -33,7 +33,7 @@
                         <tr th:each="freeBoard : ${freeBoardList}" style="cursor: pointer">
                             <td th:text="${freeBoard.no}"></td>
                             <td th:text="${freeBoard.writer}"></td>
-                            <td><a th:href="@{/free-board/detail/{no}(no=${freeBoard.no})}"
+                            <td><a th:href="@{/free-board/get/{no}(no=${freeBoard.no})}"
                             th:text="${freeBoard.title}"></a></td>
                             <td th:text="${freeBoard.registTime}"></td>
                             <td th:text="${freeBoard.count}"></td>
@@ -54,7 +54,7 @@
                     <button type="submit" class="btn">검색</button>
                 </div>
             </form>
-            <a style="padding-top: 30px" th:href="@{/free-board/insert}">게시글 등록</a>
+            <a style="padding-top: 30px" th:href="@{/free-board/write}">게시글 등록</a>
         </div>
     </div>
 </section>

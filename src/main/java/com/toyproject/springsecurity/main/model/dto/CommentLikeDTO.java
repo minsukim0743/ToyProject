@@ -4,14 +4,16 @@ public class CommentLikeDTO {
 
     private int commentNo;
     private String memberNickName;
-    private String stateYn;
+    private int categoryNo;
+    private int writeNo;
 
     public CommentLikeDTO(){}
 
-    public CommentLikeDTO(int commentNo, String memberNickName, String stateYn){
+    public CommentLikeDTO(int commentNo, String memberNickName, int categoryNo, int writeNo) {
         this.commentNo = commentNo;
         this.memberNickName = memberNickName;
-        this.stateYn = stateYn;
+        this.categoryNo = categoryNo;
+        this.writeNo = writeNo;
     }
 
     public int getCommentNo() {
@@ -30,12 +32,20 @@ public class CommentLikeDTO {
         this.memberNickName = memberNickName;
     }
 
-    public String getStateYn() {
-        return stateYn;
+    public int getCategoryNo() {
+        return categoryNo;
     }
 
-    public void setStateYn(String stateYn) {
-        this.stateYn = stateYn;
+    public void setCategoryNo(int categoryNo) {
+        this.categoryNo = categoryNo;
+    }
+
+    public int getWriterNo() {
+        return writeNo;
+    }
+
+    public void setWriterNo(int writeNo) {
+        this.writeNo = writeNo;
     }
 
     @Override
@@ -43,7 +53,8 @@ public class CommentLikeDTO {
         return "CommentLikeDTO{" +
                 "commentNo=" + commentNo +
                 ", memberNickName='" + memberNickName + '\'' +
-                ", stateYn='" + stateYn + '\'' +
+                ", categoryNo=" + categoryNo +
+                ", writeNo=" + writeNo +
                 '}';
     }
 }
