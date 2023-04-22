@@ -8,45 +8,65 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <link rel="stylesheet" th:href="@{/css/common/reset.css}">
     <link rel="stylesheet" th:href="@{/css/freeBoard/freeBoardDetail.css}">
-
 </head>
 <body>
-<th:block layout:fragment="header" th:include="/fragments/header"></th:block>
 
+<th:block layout:fragment="header" th:include="/fragments/header" class="title"></th:block>
+<div class="container">
 
-<p th:utext="${freeBoard.contents}"></p>
-<button th:if="${freeBoard.writer == #authentication.getPrincipal().getNickname()}">
-    <a th:href="@{/free-board/put/{no}(no=${freeBoard.no})}">수정</a>
-</button>
+    <div class="title-box">
+        <p th:text="${freeBoard.count}" class="count"></p>
+        <p th:text="${freeBoard.title}" class="title"></p>
+    </div>
+    <div class="text-box">
+        <p th:text="${freeBoard.writer}" class="writer"></p>
+        <p th:utext="${freeBoard.contents}" class="contents"></p>
+    </div>
+    <th:block th:if="${freeBoard.writer == #authentication.getPrincipal().getNickname()}">
+        <div class="input-btn">
+            <a th:href="@{/free-board/put/{no}(no=${freeBoard.no})}">수정</a>
+        </div>
+    </th:block>
 
-<div id="form-commentInfo">
-    <form name="commentInsertForm" class="commentInsertForm">
+    <div id="form-commentInfo">
+        <h4>Comment</h4>
+        <form name="commentInsertForm" class="commentInsertForm">
+            <div class="input-group">
+                <input type="hidden" id="writer" name="writer" th:value="${ #authentication.getPrincipal().getNickname() }">
+                <input type="text" id="comment-input" class="content" name="content" placeholder="내용을 입력해주세요.">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="commentInsertBtn"
+                            name="commentInsertBtn">등록</button></span>
+            </div>
+        </form>
         <div class="commentCount">
             댓글 <span th:text="${#lists.size(comments) }"></span> 개
         </div>
-        <div class="input-group">
-            <input type="hidden" id="writer" name="writer" th:value="${ #authentication.getPrincipal().getNickname() }">
-            <input type="text" id="comment-input" class="content" name="content" placeholder="내용을 입력해주세요.">
-            <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" id="commentInsertBtn"
-                            name="commentInsertBtn">등록</button></span>
-        </div>
-    </form>
-    <div class="commentList">
-        <table id="commentTable" class="comments-table">
-            <tbody id="tableBody">
+        <div class="commentList">
+            <table id="commentTable" class="comments-table">
+                <colgroup>
+                    <col style="width: 200px;">
+                    <col>
+                    <col style="width: 90px;">
+                    <col style="width: 90px;">
+                </colgroup>
+                <tbody id="tableBody">
                 <tr th:each="comment : ${comments}">
                     <td class="writer-regDate">
                         <p class="writer" th:text="${comment.writer}"></p>
                         <p class="regDate" th:text="${comment.regDate}"></p>
                     </td>
                     <td class="content" th:text="${comment.content}"></td>
+                    <td class="commentLike-like">
+                        따봉
+                    </td>
                     <td class="commentLike-delete" th:if="${comment.writer == #authentication.getPrincipal().getNickname()}">
                         <button class="deleteBtn" th:onclick="commentDelete([[${comment.commentNo}]])">삭제</button>
                     </td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 </body>
