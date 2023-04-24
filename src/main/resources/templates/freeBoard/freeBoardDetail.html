@@ -15,11 +15,11 @@
 <div class="container">
 
     <div class="title-box">
-        <p th:text="${freeBoard.count}" class="count"></p>
+        <p th:text="'조회수 : ' + ${freeBoard.count}" class="count"></p>
         <p th:text="${freeBoard.title}" class="title"></p>
     </div>
     <div class="text-box">
-        <p th:text="${freeBoard.writer}" class="writer"></p>
+         <p th:text="'작성자 : ' + ${freeBoard.writer}" class="writer"></p>
         <p th:utext="${freeBoard.contents}" class="contents"></p>
     </div>
     <th:block th:if="${freeBoard.writer == #authentication.getPrincipal().getNickname()}">

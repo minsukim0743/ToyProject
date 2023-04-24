@@ -14,7 +14,7 @@
       <button onclick="location.href='/member/logout'">로그아웃</button>
     </div>
     <div class="user_area">
-      <span class="user" style="text-align:center;" th:text="${ #authentication.getPrincipal().getNickname()}"></span>
+      <span class="user" style="text-align:center;" th:text="${ #authentication.getPrincipal().getNickname()} + '님 환영합니다'"></span>
     </div>
   </div>
 </html>
