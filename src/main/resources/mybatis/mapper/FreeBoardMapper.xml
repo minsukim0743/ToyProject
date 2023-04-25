@@ -26,9 +26,10 @@
 
     <resultMap id="commentLikeResultMap" type="CommentLikeDTO">
         <id property="commentNo" column="COMMENT_NO"></id>
-        <id property="memberNickName" column="MEMBER_NICKNAME"></id>
+        <id property="memberNickName" column="MEMBER_NICKNAME"/>
         <result property="categoryNo" column="CATEGORY_NO"/>
         <result property="writeNo" column="WRITE_NO"/>
+        <result property="stateYn" column="STATE_YN"/>
     </resultMap>
 
     <select id="freeBoardList" resultMap="freeBoardResultMap">
@@ -151,4 +152,91 @@
           AND  WRITE_NO = #{ no }
         ORDER BY REG_DATE ASC
     </select>
+
+    <insert id="freeBoardCommentInsert" parameterType="hashmap">
+        INSERT
+          INTO POST_COMMENT
+        (
+          COMMENT_NO
+        , CONTENT
+        , WRITER
+        , REG_DATE
+        , CATEGORY_NO
+        , WRITE_NO
+        )
+        VALUES
+        (
+          SEQ_COMMENT_NO.NEXTVAL
+        , #{ content }
+        , #{ writer }
+        , TO_CHAR(SYSDATE, 'yyyy-MM-dd HH24:MI:SS')
+        , 1
+        , #{ no }
+        )
+    </insert>
+
+    <delete id="freeBoardCommentDelete" parameterType="_int">
+        DELETE
+          FROM POST_COMMENT
+         WHERE COMMENT_NO = #{ commentNo }
+    </delete>
+
+    <update id="freeBoardCommentLikeCount">
+        UPDATE
+               POST_COMMENT
+           SET COMMENT_LIKE = COMMENT_LIKE + 1
+         WHERE WRITE_NO = #{ no }
+           AND COMMENT_NO = #{ commentNo }
+    </update>
+
+    <insert id="freeBoardCommentLike">
+        INSERT
+          INTO COMMENT_LIKE
+        (
+          COMMENT_NO
+        , MEMBER_NICKNAME
+        , CATEGORY_NO
+        , WRITE_NO
+        , STATE_YN
+        )
+        VALUES
+        (
+          #{ commentNo }
+        , #{ loginUser }
+        , 1
+        , #{ no }
+        , 'Y'
+        )
+    </insert>
+
+    <select id="freeBoardSelectCommentLike" resultMap="commentLikeResultMap">
+        SELECT
+               COMMENT_NO
+             , MEMBER_NICKNAME
+             , CATEGORY_NO
+             , WRITE_NO
+             , STATE_YN
+          FROM COMMENT_LIKE
+         WHERE MEMBER_NICKNAME = #{ loginUser }
+           AND WRITE_NO = #{ no }
+           AND CATEGORY_NO = 1
+           AND STATE_YN = 'Y'
+    </select>
+
+    <delete id="freeBoardCommentLikeCancle">
+        UPDATE
+               COMMENT_LIKE
+           SET STATE_YN = 'N'
+         WHERE COMMENT_NO = #{ commentNo }
+           AND WRITE_NO = #{ no }
+           AND MEMBER_NICKNAME = #{ loginUser }
+    </delete>
+
+    <update id="freeBoardCommentLikeMinusCount">
+        UPDATE
+               POST_COMMENT
+           SET COMMENT_LIKE = COMMENT_LIKE - 1
+         WHERE COMMENT_NO = #{ commentNo }
+           AND WRITE_NO = #{ no }
+    </update>
 </mapper>

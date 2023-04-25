@@ -13,7 +13,6 @@
 
 <th:block layout:fragment="header" th:include="/fragments/header" class="title"></th:block>
 <div class="container">
-
     <div class="title-box">
         <p th:text="'조회수 : ' + ${freeBoard.count}" class="count"></p>
         <p th:text="${freeBoard.title}" class="title"></p>
@@ -30,13 +29,14 @@
 
     <div id="form-commentInfo">
         <h4>Comment</h4>
-        <form name="commentInsertForm" class="commentInsertForm">
+        <form name="commentInsertForm" class="commentInsertForm" th:action="@{/free-board/comment/post}" method="post">
             <div class="input-group">
+                <input type="hidden" name="no" th:value="${ freeBoard.no }">
                 <input type="hidden" id="writer" name="writer" th:value="${ #authentication.getPrincipal().getNickname() }">
-                <input type="text" id="comment-input" class="content" name="content" placeholder="내용을 입력해주세요.">
+                <input type="text" id="comment-input" class="commentContent" name="content" placeholder="내용을 입력해주세요.">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" id="commentInsertBtn"
-                            name="commentInsertBtn">등록</button></span>
+                    <button class="btn btn-default" type="submit" id="commentInsertBtn">등록</button>
+                </span>
             </div>
         </form>
         <div class="commentCount">
@@ -51,19 +51,25 @@
                     <col style="width: 90px;">
                 </colgroup>
                 <tbody id="tableBody">
-                <tr th:each="comment : ${comments}">
-                    <td class="writer-regDate">
-                        <p class="writer" th:text="${comment.writer}"></p>
-                        <p class="regDate" th:text="${comment.regDate}"></p>
-                    </td>
-                    <td class="content" th:text="${comment.content}"></td>
-                    <td class="commentLike-like">
-                        따봉
-                    </td>
-                    <td class="commentLike-delete" th:if="${comment.writer == #authentication.getPrincipal().getNickname()}">
-                        <button class="deleteBtn" th:onclick="commentDelete([[${comment.commentNo}]])">삭제</button>
-                    </td>
-                </tr>
+                    <tr th:each="comment : ${comments}">
+                        <td class="writer-regDate">
+                            <p class="writer" th:text="${comment.writer}"></p>
+                            <p class="regDate" th:text="${comment.regDate}"></p>
+                        </td>
+                        <td class="content" th:text="${comment.content}"></td>
+                        <td style="width: 110px" th:text="${'추천 : ' + comment.commentLike}"></td>
+                        <th:block th:each="like : ${selectLike}">
+                            <td class="commentLike-like" th:if="${like == null}">
+                                <button class="likeBtn" th:onclick="commentLike([[${freeBoard.no}]],[[${comment.commentNo}]]);">추천</button>
+                            </td>
+                            <td class="commentLike-like" th:if="${like.stateYn == 'Y'}">
+                                <button class="likeBtn" th:onclick="commentLikeCancel([[${freeBoard.no}]],[[${comment.commentNo}]]);">추천 취소</button>
+                            </td>
+                        </th:block>
+                        <td class="commentLike-delete" th:if="${comment.writer == #authentication.getPrincipal().getNickname()}">
+                            <button class="deleteBtn" th:onclick="commentDelete([[${freeBoard.no}]],[[${comment.commentNo}]]);">삭제</button>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -72,28 +78,64 @@
 </body>
 <script th:inline="javascript">
     const message = [[${message}]];
+    const commentFail = [[${commentFail}]];
+    const commentDeleteFail = [[${commentDeleteFail}]];
+    const commentLikeFail = [[${commentLikeFail}]];
+    const commentLikeCancelFail = [[${commentLikeCancelFail}]];
 
     if(message != null && message != ''){
 
         alert(message);
     }
 
-    function commentDelete(commentNo) {
+    if(commentFail != null && commentFail != ''){
 
-        $.ajax({
-
-            url: "/main/comment/" + commentNo,
-            type: "POST",
-            success: function () {
-
-                alert('댓글이 삭제 되었습니다!');
-                commentList();
-            }, error: function () {
-
-                alert('본인이 작성한 댓글만 지울 수 있습니다.')
-            }
-        });
+        alert(commentFail);
     }
+
+    if(commentDeleteFail != null && commentDeleteFail != ''){
+
+        alert(commentDeleteFail);
+    }
+
+    if(commentLikeFail != null && commentLikeFail != ''){
+
+        alert(commentLikeFail);
+    }
+
+    if(commentLikeCancelFail != null && commentLikeCancelFail != ''){
+
+        alert(commentLikeCancelFail);
+    }
+
+    function commentDelete(no, commentNo){
+        $.post("/free-board/comment/" + no + "/" + commentNo);
+        window.location.reload();
+    }
+
+    function commentLikeCancel(no, commentNo){
+        $.post("/free-board/comment/like-cancel/" + no + "/" + commentNo);
+        window.location.reload();
+    }
+
+    function commentLike(no, commentNo){
+        $.post("/free-board/comment/like/" + no + "/" + commentNo)
+        window.location.reload();
+    }
+    $('#commentInsertBtn').click(function(){
+
+        let comment = $('.commentContent').val().trim();
+
+        if(comment == "" || comment == null){
+
+            alert("댓글을 입력해주세요.");
+            id.focus();
+            return false;
+        }
+
+        return true;
+    });
+
 </script>
 </html>
 

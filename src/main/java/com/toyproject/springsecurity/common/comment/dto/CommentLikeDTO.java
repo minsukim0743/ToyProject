@@ -1,4 +1,4 @@
-package com.toyproject.springsecurity.main.model.dto;
+package com.toyproject.springsecurity.common.comment.dto;
 
 public class CommentLikeDTO {
 
@@ -6,14 +6,16 @@ public class CommentLikeDTO {
     private String memberNickName;
     private int categoryNo;
     private int writeNo;
+    private String stateYn;
 
     public CommentLikeDTO(){}
 
-    public CommentLikeDTO(int commentNo, String memberNickName, int categoryNo, int writeNo) {
+    public CommentLikeDTO(int commentNo, String memberNickName, int categoryNo, int writeNo, String stateYn) {
         this.commentNo = commentNo;
         this.memberNickName = memberNickName;
         this.categoryNo = categoryNo;
         this.writeNo = writeNo;
+        this.stateYn = stateYn;
     }
 
     public int getCommentNo() {
@@ -40,12 +42,20 @@ public class CommentLikeDTO {
         this.categoryNo = categoryNo;
     }
 
-    public int getWriterNo() {
+    public int getWriteNo() {
         return writeNo;
     }
 
-    public void setWriterNo(int writeNo) {
+    public void setWriteNo(int writeNo) {
         this.writeNo = writeNo;
+    }
+
+    public String getStateYn() {
+        return stateYn;
+    }
+
+    public void setStateYn(String stateYn) {
+        this.stateYn = stateYn;
     }
 
     @Override

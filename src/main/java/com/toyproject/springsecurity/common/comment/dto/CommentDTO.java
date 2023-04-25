@@ -1,4 +1,4 @@
-package com.toyproject.springsecurity.main.model.dto;
+package com.toyproject.springsecurity.common.comment.dto;
 
 public class CommentDTO {
 

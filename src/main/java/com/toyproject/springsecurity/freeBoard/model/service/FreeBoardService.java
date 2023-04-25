@@ -1,8 +1,9 @@
 package com.toyproject.springsecurity.freeBoard.model.service;
 
+import com.toyproject.springsecurity.common.comment.dto.CommentLikeDTO;
 import com.toyproject.springsecurity.common.util.SelectCriteria;
 import com.toyproject.springsecurity.freeBoard.model.dto.FreeBoardDTO;
-import com.toyproject.springsecurity.main.model.dto.CommentDTO;
+import com.toyproject.springsecurity.common.comment.dto.CommentDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -21,4 +22,18 @@ public interface FreeBoardService {
     int freeBoardUpdate(FreeBoardDTO freeBoard);
 
     List<CommentDTO> freeBoardDetailCommentList(int no);
+
+    int freeBoardCommentInsert(Map<String, String> paramMap);
+
+    int freeBoardCommentDelete(int commentNo);
+
+    int freeBoardCommentLike(int commentNo, int no, String loginUser);
+
+    int freeBoardCommentLikeCount(int commentNo, int no);
+
+    List<CommentLikeDTO> freeBoardSelectCommentLike(int no, String loginUser);
+
+    int freeBoardCommentLikeCancle(int commentNo, int no, String loginUser);
+
+    int freeBoardCommentLikeMinusCount(int commentNo, int no);
 }

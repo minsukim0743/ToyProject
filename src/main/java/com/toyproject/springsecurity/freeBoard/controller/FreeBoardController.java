@@ -1,23 +1,21 @@
 package com.toyproject.springsecurity.freeBoard.controller;
 
+import com.toyproject.springsecurity.common.comment.dto.CommentLikeDTO;
 import com.toyproject.springsecurity.common.util.Pagenation;
 import com.toyproject.springsecurity.common.util.SelectCriteria;
 import com.toyproject.springsecurity.freeBoard.model.dto.FreeBoardDTO;
 import com.toyproject.springsecurity.freeBoard.model.service.FreeBoardService;
-import com.toyproject.springsecurity.main.model.dto.CommentDTO;
+import com.toyproject.springsecurity.common.comment.dto.CommentDTO;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.stream.events.Comment;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -95,16 +93,20 @@ public class FreeBoardController {
     @ApiOperation(value = "자유게시판 게시글 상세페이지 페이지 이동",
             notes = "자유게시판 게시글 상세페이지로 이동하며 클릭 시 조회수 + 1 증가")
     @GetMapping("/get/{no}")
-    public ModelAndView freeBoardDetail(@PathVariable("no") int no, ModelAndView mv){
+    public ModelAndView freeBoardDetail(@PathVariable("no") int no, ModelAndView mv, Principal principal){
+
+        String loginUser = principal.getName();
 
         FreeBoardDTO freeBoard = freeBoardService.freeBoardDetail(no);
         freeBoardService.freeBoardDetailCount(no);
         List<CommentDTO> comments = freeBoardService.freeBoardDetailCommentList(no);
+        List<CommentLikeDTO> selectLike = freeBoardService.freeBoardSelectCommentLike(no, loginUser);
 
-        log.info("[freeBoard] : {}", freeBoard);
-
+        System.out.println("selectLike = " + selectLike);
+        
         mv.addObject("freeBoard", freeBoard);
         mv.addObject("comments", comments);
+        mv.addObject("selectLike", selectLike);
         mv.setViewName("/freeBoard/freeBoardDetail");
 
         return mv;
@@ -149,4 +151,71 @@ public class FreeBoardController {
         return url;
     }
 
+    @PostMapping("/comment/post")
+    public String freeBoardInsert(@RequestParam Map<String, String> paramMap, RedirectAttributes rttr){
+
+        int no = Integer.parseInt(paramMap.get("no"));
+        String url = "redirect:/free-board/get/" + no;
+
+        int result = freeBoardService.freeBoardCommentInsert(paramMap);
+
+        if(result != 1){
+            rttr.addFlashAttribute("commentFail", "댓글 등록에 실패하였습니다.");
+        }
+
+        log.info("[free-board] comment : {}", paramMap);
+
+        return url;
+    }
+
+    @PostMapping("/comment/{no}/{commentNo}")
+    public String freeBoardCommentDelete(@PathVariable int commentNo, @PathVariable int no,
+                                         RedirectAttributes rttr){
+
+        String url = "redirect:/free-board/get/" + no;
+
+        int result = freeBoardService.freeBoardCommentDelete(commentNo);
+
+        if(result != 1){
+            rttr.addFlashAttribute("commentDeleteFail", "댓글 삭제에 실패하였습니다.");
+        }
+
+        return url;
+    }
+
+    @PostMapping("/comment/like/{no}/{commentNo}")
+    public String freeBoardCommentLike(@PathVariable int no, @PathVariable int commentNo, Principal principal
+                                       ,RedirectAttributes rttr){
+
+        String loginUser = principal.getName();
+
+        String url = "redirect:/free-board/get/" + no;
+
+        int result = freeBoardService.freeBoardCommentLike(commentNo, no, loginUser);
+        int result2 = freeBoardService.freeBoardCommentLikeCount(commentNo, no);
+
+        if(result != 1 && result2 != 1){
+            rttr.addFlashAttribute("commentLikeFail", "댓글 좋아요에 실패하였습니다.");
+        }
+
+        return url;
+    }
+
+    @PostMapping("/comment/like-cancel/{no}/{commentNo}")
+    public String freeBoardLikeCancle(@PathVariable int no, @PathVariable int commentNo, Principal principal
+            ,RedirectAttributes rttr){
+
+        String loginUser = principal.getName();
+
+        String url = "redirect:/free-board/get/" + no;
+
+        int result = freeBoardService.freeBoardCommentLikeCancle(commentNo, no, loginUser);
+        int result2 = freeBoardService.freeBoardCommentLikeMinusCount(commentNo, no);
+
+        if(result != 1 && result2 != 1){
+            rttr.addFlashAttribute("commentLikeCancelFail", "댓글 추천 취소에 실패하였습니다.");
+        }
+
+        return url;
+    }
 }

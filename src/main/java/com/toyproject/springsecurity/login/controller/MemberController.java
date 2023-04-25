@@ -1,7 +1,6 @@
 package com.toyproject.springsecurity.login.controller;
 
 import com.toyproject.springsecurity.login.model.dto.MemberDTO;
-import com.toyproject.springsecurity.main.model.service.CommentService;
 import com.toyproject.springsecurity.login.model.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,13 +22,11 @@ public class MemberController {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final PasswordEncoder passwordEncoder;
     private final MemberService memberService;
-    private final CommentService commentService;
 
     @Autowired
-    public MemberController(PasswordEncoder passwordEncoder, MemberService memberService, CommentService commentService) {
+    public MemberController(PasswordEncoder passwordEncoder, MemberService memberService) {
         this.passwordEncoder = passwordEncoder;
         this.memberService = memberService;
-        this.commentService = commentService;
     }
 
     @ApiOperation(value = "회원가입시 ID 중복체크", notes = "회원가입시 입력 ID 중복체크 하는 메소드")
