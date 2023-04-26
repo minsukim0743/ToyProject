@@ -17,20 +17,6 @@
 <!-- E: header -->
 
 <!-- S: container -->
-<div id="form-commentInfo">
-    <form name="commentInsertForm" class="commentInsertForm">
-        <div class="commentCount">
-            댓글 <span th:text="${ totalCount }"></span> 개
-        </div>
-        <div class="input-group">
-            <input type="hidden" id="writer" name="writer" th:value="${ #authentication.getPrincipal().getNickname() }">
-            <input type="text" id="comment-input" class="content" name="content" placeholder="내용을 입력해주세요.">
-            <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" id="commentInsertBtn"
-                            name="commentInsertBtn">등록</button>
-                </span>
-        </div>
-    </form>
 <!--    <div class="commentList">-->
 <!--        <table id="commentTable" class="comments-table">-->
 <!--            <tbody id="tableBody">-->

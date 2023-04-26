@@ -52,20 +52,21 @@
                 </colgroup>
                 <tbody id="tableBody">
                     <tr th:each="comment : ${comments}">
+                        <input type="hidden" name="commentNo" th:value="${comment.commentNo}">
                         <td class="writer-regDate">
                             <p class="writer" th:text="${comment.writer}"></p>
                             <p class="regDate" th:text="${comment.regDate}"></p>
                         </td>
                         <td class="content" th:text="${comment.content}"></td>
-                        <td style="width: 110px" th:text="${'추천 : ' + comment.commentLike}"></td>
-                        <th:block th:each="like : ${selectLike}">
-                            <td class="commentLike-like" th:if="${like == null}">
-                                <button class="likeBtn" th:onclick="commentLike([[${freeBoard.no}]],[[${comment.commentNo}]]);">추천</button>
-                            </td>
-                            <td class="commentLike-like" th:if="${like.stateYn == 'Y'}">
-                                <button class="likeBtn" th:onclick="commentLikeCancel([[${freeBoard.no}]],[[${comment.commentNo}]]);">추천 취소</button>
-                            </td>
-                        </th:block>
+<!--                        <td style="width: 135px" th:text="${'추천 : ' + comment.commentLike}"></td>-->
+<!--                            <td class="commentLike-like">-->
+<!--                                <button class="likeBtn" th:onclick="commentLike([[${freeBoard.no}]],[[${comment.commentNo}]]);">추천</button>-->
+<!--                            </td>-->
+<!--                        <th:block th:each="like : ${selectLike}">-->
+<!--                            <td class="commentLike-like" th:if="${like.stateYn == 'Y'}">-->
+<!--                                <button class="likeBtn" th:onclick="commentLikeCancel([[${freeBoard.no}]],[[${comment.commentNo}]]);">추천 취소</button>-->
+<!--                            </td>-->
+<!--                        </th:block>-->
                         <td class="commentLike-delete" th:if="${comment.writer == #authentication.getPrincipal().getNickname()}">
                             <button class="deleteBtn" th:onclick="commentDelete([[${freeBoard.no}]],[[${comment.commentNo}]]);">삭제</button>
                         </td>
@@ -113,15 +114,16 @@
         window.location.reload();
     }
 
-    function commentLikeCancel(no, commentNo){
-        $.post("/free-board/comment/like-cancel/" + no + "/" + commentNo);
-        window.location.reload();
-    }
+    // function commentLikeCancel(no, commentNo){
+    //     $.post("/free-board/comment/like-cancel/" + no + "/" + commentNo);
+    //     window.location.reload();
+    // }
+    //
+    // function commentLike(no, commentNo){
+    //     $.post("/free-board/comment/like/" + no + "/" + commentNo)
+    //     window.location.reload();
+    // }
 
-    function commentLike(no, commentNo){
-        $.post("/free-board/comment/like/" + no + "/" + commentNo)
-        window.location.reload();
-    }
     $('#commentInsertBtn').click(function(){
 
         let comment = $('.commentContent').val().trim();

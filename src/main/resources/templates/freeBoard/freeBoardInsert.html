@@ -23,7 +23,7 @@
     <h3>게시글 작성</h3>
     <br>
 
-    <form th:action="@{/free-board/insert}" method="post">
+    <form th:action="@{/free-board/write}" method="post">
         <input type="hidden" name="writer" th:value="${#authentication.getPrincipal().getNickname()}">
         <table class="table">
             <colgroup>

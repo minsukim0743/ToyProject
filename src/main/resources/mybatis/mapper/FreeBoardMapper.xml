@@ -6,13 +6,13 @@
 <mapper namespace="com.toyproject.springsecurity.freeBoard.model.dao.FreeBoardMapper">
 
     <resultMap id="freeBoardResultMap" type="FreeBoardDTO">
-        <id property="no" column="NO"></id>
-        <result property="title" column="TITLE"></result>
-        <result property="contents" column="CONTENTS"></result>
-        <result property="count" column="COUNT"></result>
-        <result property="registTime" column="REGIST_TIME"></result>
-        <result property="writer" column="WRITER"></result>
-        <result property="updateTime" column="UPDATE_TIME"></result>
+        <id property="no" column="NO"/>
+        <result property="title" column="TITLE"/>
+        <result property="contents" column="CONTENTS"/>
+        <result property="count" column="COUNT"/>
+        <result property="registTime" column="REGIST_TIME"/>
+        <result property="writer" column="WRITER"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
     </resultMap>
 
     <resultMap id="commentResultMap" type="CommentDTO">
@@ -20,12 +20,14 @@
         <result property="content" column="CONTENT"/>
         <result property="writer" column="WRITER"/>
         <result property="regDate" column="REG_DATE"/>
+        <result property="commentLike" column="COMMENT_LIKE"/>
         <result property="categoryNo" column="CATEGORY_NO"/>
         <result property="writeNo" column="WRITE_NO"/>
+        <collection property="commentLike1" resultMap="commentLikeResultMap"></collection>
     </resultMap>
 
     <resultMap id="commentLikeResultMap" type="CommentLikeDTO">
-        <id property="commentNo" column="COMMENT_NO"></id>
+        <id property="commentNo" column="COMMENT_NO"/>
         <id property="memberNickName" column="MEMBER_NICKNAME"/>
         <result property="categoryNo" column="CATEGORY_NO"/>
         <result property="writeNo" column="WRITE_NO"/>
@@ -34,33 +36,58 @@
 
     <select id="freeBoardList" resultMap="freeBoardResultMap">
         SELECT
-               NO
-             , TITLE
-             , CONTENTS
-             , COUNT
-             , REGIST_TIME
-             , WRITER
-             , UPDATE_TIME
-             , DELETE_YN
-          FROM FREE_BOARD
+        A.NO
+        , A.TITLE
+        , A.CONTENTS
+        , A.COUNT
+        , A.REGIST_TIME
+        , A.WRITER
+        , A.UPDATE_TIME
+        , A.DELETE_YN
+        FROM (SELECT ROWNUM RNUM
+        , B.NO
+        , B.TITLE
+        , B.CONTENTS
+        , B.COUNT
+        , B.REGIST_TIME
+        , B.WRITER
+        , B.UPDATE_TIME
+        , B.DELETE_YN
+        FROM (SELECT
+        C.NO
+        , C.TITLE
+        , C.CONTENTS
+        , C.COUNT
+        , C.REGIST_TIME
+        , C.WRITER
+        , C.UPDATE_TIME
+        , C.DELETE_YN
+        FROM FREE_BOARD C
         <where>
             <if test="searchCondition == 'writer'">
-                WRITER = #{ searchValue }
+                C.WRITER = #{ searchValue }
             </if>
             <if test="searchCondition == 'title'">
-                TITLE LIKE '%' || #{ searchValue } || '%'
+                C.TITLE LIKE '%' || #{ searchValue } || '%'
             </if>
             <if test="searchCondition == 'content'">
-                CONTENTS LIKE '%' || #{ searchValue } || '%'
+                C.CONTENTS LIKE '%' || #{ searchValue } || '%'
             </if>
         </where>
         ORDER BY NO DESC
+        ) B
+        <![CDATA[
+                 WHERE ROWNUM <= #{ endRow }
+                ]]>
+        ) A
+        WHERE A.RNUM >= #{ startRow }
+        ORDER BY 1 DESC
     </select>
 
     <select id="freeBoardCount" resultType="_int" parameterType="hashmap">
         SELECT
-               COUNT(*)
-          FROM FREE_BOARD
+        COUNT(*)
+        FROM FREE_BOARD
         <where>
             <if test="searchCondition == 'writer'">
                 WRITER = #{ searchValue }
@@ -76,33 +103,27 @@
 
     <insert id="freeBoardInsert">
         INSERT
-          INTO FREE_BOARD
-        (
-          No
+        INTO FREE_BOARD
+        ( No
         , TITLE
         , CONTENTS
         , COUNT
         , REGIST_TIME
         , WRITER
         , UPDATE_TIME
-        , DELETE_YN
-        )
-        VALUES
-        (
-          SEQ_FREEBOARD_NO.NEXTVAL
-        , #{ title }
-        , #{ contents }
-        , 0
-        , TO_CHAR(SYSDATE, 'yyyy-MM-dd HH24:MI:SS')
-        , #{ writer }
-        , NULL
-        , 'N'
-        )
+        , DELETE_YN)
+        VALUES ( SEQ_FREEBOARD_NO.NEXTVAL
+               , #{ title }
+               , #{ contents }
+               , 0
+               , TO_CHAR(SYSDATE, 'yyyy-MM-dd HH24:MI:SS')
+               , #{ writer }
+               , NULL
+               , 'N')
     </insert>
 
     <select id="freeBoardDetail" resultMap="freeBoardResultMap">
-        SELECT
-               NO
+        SELECT NO
              , TITLE
              , CONTENTS
              , COUNT
@@ -111,132 +132,127 @@
              , UPDATE_TIME
              , DELETE_YN
         FROM FREE_BOARD
-       WHERE NO = #{ no }
-         AND DELETE_YN = 'N'
+        WHERE NO = #{ no }
+          AND DELETE_YN = 'N'
     </select>
 
     <update id="freeBoardDetailCount">
         UPDATE
-               FREE_BOARD
-           SET COUNT = COUNT + 1
-         WHERE NO = #{ no }
+            FREE_BOARD
+        SET COUNT = COUNT + 1
+        WHERE NO = #{ no }
     </update>
 
     <update id="freeBoardUpdate">
         UPDATE
-               FREE_BOARD
+        FREE_BOARD
         <trim prefix="SET" prefixOverrides=",">
-           <if test="contents != null and contents != ''">
-              , CONTENTS = #{ contents }
-           </if>
-            <if test="title != null and title != ''">
-              , TITLE = #{ title }
+            <if test="contents != null and contents != ''">
+                , CONTENTS = #{ contents }
             </if>
-              , UPDATE_TIME = TO_CHAR(SYSDATE, 'yyyy-MM-dd HH24:MI:SS')
+            <if test="title != null and title != ''">
+                , TITLE = #{ title }
+            </if>
+            , UPDATE_TIME = TO_CHAR(SYSDATE, 'yyyy-MM-dd HH24:MI:SS')
         </trim>
-         WHERE NO = #{ no }
-           AND WRITER = #{ writer }
+        WHERE NO = #{ no }
+        AND WRITER = #{ writer }
     </update>
 
-    <select id="freeBoardDetailCommentList" resultMap="commentResultMap">
-        SELECT
-               COMMENT_NO
-             , CONTENT
-             , WRITER
-             , REG_DATE
-             , COMMENT_LIKE
-             , CATEGORY_NO
-             , WRITE_NO
-         FROM  POST_COMMENT
-        WHERE  CATEGORY_NO = 1
-          AND  WRITE_NO = #{ no }
-        ORDER BY REG_DATE ASC
+    <select id="freeBoardDetailCommentList" resultMap="commentResultMap" parameterType="java.util.List">
+        SELECT A.COMMENT_NO
+             , A.CONTENT
+             , A.WRITER
+             , A.REG_DATE
+             , A.COMMENT_LIKE
+             , A.CATEGORY_NO
+             , A.WRITE_NO
+             , B.COMMENT_NO
+        FROM POST_COMMENT A
+                 LEFT JOIN COMMENT_LIKE B ON (A.COMMENT_NO = B.COMMENT_NO)
+        WHERE A.CATEGORY_NO = 1
+          AND A.WRITE_NO = #{ no }
+        ORDER BY A.REG_DATE ASC
     </select>
 
     <insert id="freeBoardCommentInsert" parameterType="hashmap">
         INSERT
-          INTO POST_COMMENT
-        (
-          COMMENT_NO
+        INTO POST_COMMENT
+        ( COMMENT_NO
         , CONTENT
         , WRITER
         , REG_DATE
         , CATEGORY_NO
-        , WRITE_NO
-        )
-        VALUES
-        (
-          SEQ_COMMENT_NO.NEXTVAL
-        , #{ content }
-        , #{ writer }
-        , TO_CHAR(SYSDATE, 'yyyy-MM-dd HH24:MI:SS')
-        , 1
-        , #{ no }
-        )
+        , WRITE_NO)
+        VALUES ( SEQ_COMMENT_NO.NEXTVAL
+               , #{ content }
+               , #{ writer }
+               , TO_CHAR(SYSDATE, 'yyyy-MM-dd HH24:MI:SS')
+               , 1
+               , #{ no })
     </insert>
 
     <delete id="freeBoardCommentDelete" parameterType="_int">
         DELETE
-          FROM POST_COMMENT
-         WHERE COMMENT_NO = #{ commentNo }
+        FROM POST_COMMENT
+        WHERE COMMENT_NO = #{ commentNo }
     </delete>
 
-    <update id="freeBoardCommentLikeCount">
-        UPDATE
-               POST_COMMENT
-           SET COMMENT_LIKE = COMMENT_LIKE + 1
-         WHERE WRITE_NO = #{ no }
-           AND COMMENT_NO = #{ commentNo }
-    </update>
+    <!--    <update id="freeBoardCommentLikeCount">-->
+    <!--        UPDATE-->
+    <!--               POST_COMMENT A-->
+    <!--           SET A.COMMENT_LIKE = (SELECT B.COMMENT_LIKE-->
+    <!--                                   FROM POST_COMMENT B-->
+    <!--                                  WHERE B.WRITE_NO = #{ no }-->
+    <!--                                    AND B.COMMENT_NO = #{ commentNo }-->
+    <!--                                  ) + 1-->
+    <!--         WHERE WRITE_NO = #{ no }-->
+    <!--           AND COMMENT_NO = #{ commentNo }-->
+    <!--    </update>-->
 
-    <insert id="freeBoardCommentLike">
-        INSERT
-          INTO COMMENT_LIKE
-        (
-          COMMENT_NO
-        , MEMBER_NICKNAME
-        , CATEGORY_NO
-        , WRITE_NO
-        , STATE_YN
-        )
-        VALUES
-        (
-          #{ commentNo }
-        , #{ loginUser }
-        , 1
-        , #{ no }
-        , 'Y'
-        )
-    </insert>
+    <!--    <insert id="freeBoardCommentLike">-->
+    <!--        INSERT-->
+    <!--          INTO COMMENT_LIKE-->
+    <!--        (-->
+    <!--          COMMENT_NO-->
+    <!--        , MEMBER_NICKNAME-->
+    <!--        , CATEGORY_NO-->
+    <!--        , WRITE_NO-->
+    <!--        , STATE_YN-->
+    <!--        )-->
+    <!--        VALUES-->
+    <!--        (-->
+    <!--          #{ commentNo }-->
+    <!--        , #{ loginUser }-->
+    <!--        , 1-->
+    <!--        , #{ no }-->
+    <!--        , 'Y'-->
+    <!--        )-->
+    <!--    </insert>-->
 
-    <select id="freeBoardSelectCommentLike" resultMap="commentLikeResultMap">
-        SELECT
-               COMMENT_NO
-             , MEMBER_NICKNAME
-             , CATEGORY_NO
-             , WRITE_NO
-             , STATE_YN
-          FROM COMMENT_LIKE
-         WHERE MEMBER_NICKNAME = #{ loginUser }
-           AND WRITE_NO = #{ no }
-           AND CATEGORY_NO = 1
-           AND STATE_YN = 'Y'
-    </select>
+    <!--    <select id="freeBoardSelectCommentLike" resultMap="commentLikeResultMap">-->
+    <!--        SELECT-->
+    <!--               *-->
+    <!--          FROM COMMENT_LIKE-->
+    <!--         WHERE MEMBER_NICKNAME = #{ loginUser }-->
+    <!--           AND WRITE_NO = #{ no }-->
+    <!--           AND CATEGORY_NO = 1-->
+    <!--           AND STATE_YN = 'Y'-->
+    <!--    </select>-->
 
-    <delete id="freeBoardCommentLikeCancle">
-        UPDATE
-               COMMENT_LIKE
-           SET STATE_YN = 'N'
-         WHERE COMMENT_NO = #{ commentNo }
-           AND WRITE_NO = #{ no }
-           AND MEMBER_NICKNAME = #{ loginUser }
-    </delete>
+    <!--    <delete id="freeBoardCommentLikeCancle">-->
+    <!--        DELETE-->
+    <!--          FROM COMMENT_LIKE-->
+    <!--         WHERE COMMENT_NO = #{ commentNo }-->
+    <!--           AND WRITE_NO = #{ no }-->
+    <!--           AND MEMBER_NICKNAME = #{ loginUser }-->
+    <!--    </delete>-->
 
-    <update id="freeBoardCommentLikeMinusCount">
-        UPDATE
-               POST_COMMENT
-           SET COMMENT_LIKE = COMMENT_LIKE - 1
-         WHERE COMMENT_NO = #{ commentNo }
-           AND WRITE_NO = #{ no }
-    </update>
+    <!--    <update id="freeBoardCommentLikeMinusCount">-->
+    <!--        UPDATE-->
+    <!--               POST_COMMENT-->
+    <!--           SET COMMENT_LIKE = COMMENT_LIKE - 1-->
+    <!--         WHERE COMMENT_NO = #{ commentNo }-->
+    <!--           AND WRITE_NO = #{ no }-->
+    <!--    </update>-->
 </mapper>

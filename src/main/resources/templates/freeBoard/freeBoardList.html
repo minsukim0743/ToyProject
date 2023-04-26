@@ -60,10 +60,16 @@
                 </div>
             </form>
             <div class="pagination">
-                <a href="" title="" class="first-first">&lt;&lt;</a>
-                <a href="" title="" class="first">&lt;</a>
-                <a href="" title="" class="active">1</a>
-                <a href="" title="" class="last">&gt;</a>
+                <a th:href="@{/free-board(currentPage=${ 1 },searchCondition=${selectCriteria.searchCondition},
+                     searchValue=${selectCriteria.searchValue})}" class="first-first">&lt;&lt;</a>
+                <a th:href="@{/free-board(currentPage=${ selectCriteria.pageNo -1 },
+                searchCondition=${selectCriteria.searchCondition},searchValue=${selectCriteria.searchValue})}" class="first">&lt;</a>
+                <th:block th:each="page : ${#numbers.sequence(selectCriteria.startPage, selectCriteria.endPage)}">
+                    <a th:text="${ page }" th:href="@{/free-board(currentPage=${ page },searchCondition=${selectCriteria.searchCondition},
+                     searchValue=${selectCriteria.searchValue})}"
+                     th:disabled="${ selectCriteria.pageNo == page}" class="active"></a>
+                </th:block>
+                <a th:href="" title="" class="last">></a>
                 <a href="" title="" class="last-last">&gt;&gt;</a>
             </div>
         </div>
