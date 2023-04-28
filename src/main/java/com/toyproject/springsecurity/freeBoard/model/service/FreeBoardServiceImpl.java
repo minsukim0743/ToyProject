@@ -59,9 +59,9 @@ public class FreeBoardServiceImpl implements FreeBoardService {
     }
 
     @Override
-    public List<CommentDTO> freeBoardDetailCommentList(int no) {
+    public List<CommentDTO> freeBoardDetailCommentList(SelectCriteria selectCriteria) {
 
-        return freeBoardMapper.freeBoardDetailCommentList(no);
+        return freeBoardMapper.freeBoardDetailCommentList(selectCriteria);
     }
 
     @Override
@@ -100,5 +100,11 @@ public class FreeBoardServiceImpl implements FreeBoardService {
     @Override
     public int freeBoardCommentLikeMinusCount(int commentNo, int no) {
         return freeBoardMapper.freeBoardCommentLikeMinusCount(commentNo, no);
+    }
+
+    @Override
+    public int freeBoardCommentsCount(int no) {
+
+        return freeBoardMapper.freeBoardCommentsCount(no);
     }
 }

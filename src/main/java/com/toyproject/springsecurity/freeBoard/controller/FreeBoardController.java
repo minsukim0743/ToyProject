@@ -64,6 +64,8 @@ public class FreeBoardController {
             selectCriteria = pagenation.getSelectCriteria(pageNo, freeBoardCount, searchCondition, searchValue);
         }
 
+        System.out.println("selectCriteria = " + selectCriteria);
+
         List<FreeBoardDTO> freeBoardList = freeBoardService.freeBoardList(selectCriteria);
 
         mv.addObject("freeBoardList", freeBoardList);
@@ -95,17 +97,31 @@ public class FreeBoardController {
     @ApiOperation(value = "자유게시판 게시글 상세페이지 페이지 이동",
             notes = "자유게시판 게시글 상세페이지로 이동하며 클릭 시 조회수 + 1 증가")
     @GetMapping("/get/{no}")
-    public ModelAndView freeBoardDetail(@PathVariable("no") int no, ModelAndView mv, Principal principal){
+    public ModelAndView freeBoardDetail(@PathVariable("no") int no, ModelAndView mv, Principal principal,
+                                        HttpServletRequest request){
+        String amount = request.getParameter("amount");
+        int pageNo = 1;
 
+        if(amount != "" && amount != null){
+            pageNo = Integer.parseInt(amount);
+        }
 //        String loginUser = principal.getName();
 
         FreeBoardDTO freeBoard = freeBoardService.freeBoardDetail(no);
         freeBoardService.freeBoardDetailCount(no);
-        List<CommentDTO> comments = freeBoardService.freeBoardDetailCommentList(no);
+        int freeBoardCommentCount = freeBoardService.freeBoardCommentsCount(no);
 //        List<CommentLikeDTO> selectLike = freeBoardService.freeBoardSelectCommentLike(no, loginUser);
+
+        SelectCriteria selectCriteria = null;
+        selectCriteria = pagenation.getCommentList(pageNo, freeBoardCommentCount, no);
+
+        List<CommentDTO> comments = freeBoardService.freeBoardDetailCommentList(selectCriteria);
+
+        System.out.println("selectCriteria = " + selectCriteria);
 
         mv.addObject("freeBoard", freeBoard);
         mv.addObject("comments", comments);
+        mv.addObject("selectCriteria", selectCriteria);
 //        mv.addObject("selectLike", selectLike);
         mv.setViewName("/freeBoard/freeBoardDetail");
 

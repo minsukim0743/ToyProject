@@ -21,7 +21,7 @@ public interface FreeBoardService {
 
     int freeBoardUpdate(FreeBoardDTO freeBoard);
 
-    List<CommentDTO> freeBoardDetailCommentList(int no);
+    List<CommentDTO> freeBoardDetailCommentList(SelectCriteria selectCriteria);
 
     int freeBoardCommentInsert(Map<String, String> paramMap);
 
@@ -36,4 +36,6 @@ public interface FreeBoardService {
     int freeBoardCommentLikeCancle(int commentNo, int no, String loginUser);
 
     int freeBoardCommentLikeMinusCount(int commentNo, int no);
+
+    int freeBoardCommentsCount(int no);
 }

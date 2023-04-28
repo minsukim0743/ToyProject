@@ -75,14 +75,14 @@ body {
   margin-top: 50px;
   text-align: center;
 }
-.container .pagination a {
+.container .pagination button {
   color: #d4d4d4;
   padding: 0 8px;
 }
-.container .pagination a:hover {
+.container .pagination button:hover {
   color: #343a40;
 }
-.container .pagination a.active {
+.container .pagination button.active {
   text-decoration: underline;
   font-weight: bold;
   color: #343a40;

@@ -36,33 +36,34 @@
 
     <select id="freeBoardList" resultMap="freeBoardResultMap">
         SELECT
-        A.NO
-        , A.TITLE
-        , A.CONTENTS
-        , A.COUNT
-        , A.REGIST_TIME
-        , A.WRITER
-        , A.UPDATE_TIME
-        , A.DELETE_YN
-        FROM (SELECT ROWNUM RNUM
-        , B.NO
-        , B.TITLE
-        , B.CONTENTS
-        , B.COUNT
-        , B.REGIST_TIME
-        , B.WRITER
-        , B.UPDATE_TIME
-        , B.DELETE_YN
-        FROM (SELECT
-        C.NO
-        , C.TITLE
-        , C.CONTENTS
-        , C.COUNT
-        , C.REGIST_TIME
-        , C.WRITER
-        , C.UPDATE_TIME
-        , C.DELETE_YN
-        FROM FREE_BOARD C
+              A.NO
+            , A.TITLE
+            , A.CONTENTS
+            , A.COUNT
+            , A.REGIST_TIME
+            , A.WRITER
+            , A.UPDATE_TIME
+            , A.DELETE_YN
+           FROM (SELECT
+                        ROWNUM RNUM
+                      , B.NO
+                      , B.TITLE
+                      , B.CONTENTS
+                      , B.COUNT
+                      , B.REGIST_TIME
+                      , B.WRITER
+                      , B.UPDATE_TIME
+                      , B.DELETE_YN
+                  FROM (SELECT
+                               C.NO
+                             , C.TITLE
+                             , C.CONTENTS
+                             , C.COUNT
+                             , C.REGIST_TIME
+                             , C.WRITER
+                             , C.UPDATE_TIME
+                             , C.DELETE_YN
+                          FROM FREE_BOARD C
         <where>
             <if test="searchCondition == 'writer'">
                 C.WRITER = #{ searchValue }
@@ -86,8 +87,8 @@
 
     <select id="freeBoardCount" resultType="_int" parameterType="hashmap">
         SELECT
-        COUNT(*)
-        FROM FREE_BOARD
+               COUNT(*)
+          FROM FREE_BOARD
         <where>
             <if test="searchCondition == 'writer'">
                 WRITER = #{ searchValue }
@@ -104,22 +105,26 @@
     <insert id="freeBoardInsert">
         INSERT
         INTO FREE_BOARD
-        ( No
+        (
+          No
         , TITLE
         , CONTENTS
         , COUNT
         , REGIST_TIME
         , WRITER
         , UPDATE_TIME
-        , DELETE_YN)
-        VALUES ( SEQ_FREEBOARD_NO.NEXTVAL
-               , #{ title }
-               , #{ contents }
-               , 0
-               , TO_CHAR(SYSDATE, 'yyyy-MM-dd HH24:MI:SS')
-               , #{ writer }
-               , NULL
-               , 'N')
+        , DELETE_YN
+        )
+        VALUES
+        (  SEQ_FREEBOARD_NO.NEXTVAL
+         , #{ title }
+         , #{ contents }
+         , 0
+         , TO_CHAR(SYSDATE, 'yyyy-MM-dd HH24:MI:SS')
+         , #{ writer }
+         , NULL
+         , 'N'
+        )
     </insert>
 
     <select id="freeBoardDetail" resultMap="freeBoardResultMap">
@@ -159,20 +164,59 @@
         AND WRITER = #{ writer }
     </update>
 
-    <select id="freeBoardDetailCommentList" resultMap="commentResultMap" parameterType="java.util.List">
-        SELECT A.COMMENT_NO
+<!--    <select id="freeBoardDetailCommentList" resultMap="commentResultMap" parameterType="hashmap">-->
+<!--        SELECT A.COMMENT_NO-->
+<!--             , A.CONTENT-->
+<!--             , A.WRITER-->
+<!--             , A.REG_DATE-->
+<!--             , A.COMMENT_LIKE-->
+<!--             , A.CATEGORY_NO-->
+<!--             , A.WRITE_NO-->
+<!--             , B.COMMENT_NO-->
+<!--        FROM POST_COMMENT A-->
+<!--                 LEFT JOIN COMMENT_LIKE B ON (A.COMMENT_NO = B.COMMENT_NO)-->
+<!--        WHERE A.CATEGORY_NO = 1-->
+<!--          AND A.WRITE_NO = #{ no }-->
+<!--        ORDER BY A.REG_DATE ASC-->
+<!--    </select>-->
+
+    <select id="freeBoardDetailCommentList" resultMap="commentResultMap" parameterType="hashmap">
+        SELECT
+               A.COMMENT_NO
              , A.CONTENT
              , A.WRITER
              , A.REG_DATE
              , A.COMMENT_LIKE
              , A.CATEGORY_NO
              , A.WRITE_NO
-             , B.COMMENT_NO
-        FROM POST_COMMENT A
-                 LEFT JOIN COMMENT_LIKE B ON (A.COMMENT_NO = B.COMMENT_NO)
-        WHERE A.CATEGORY_NO = 1
-          AND A.WRITE_NO = #{ no }
-        ORDER BY A.REG_DATE ASC
+          FROM(SELECT
+                      ROWNUM RNUM
+                    , B.COMMENT_NO
+                    , B.CONTENT
+                    , B.WRITER
+                    , B.REG_DATE
+                    , B.COMMENT_LIKE
+                    , B.CATEGORY_NO
+                    , B.WRITE_NO
+                 FROM (SELECT
+                              C.COMMENT_NO
+                            , C.CONTENT
+                            , C.WRITER
+                            , C.REG_DATE
+                            , C.COMMENT_LIKE
+                            , C.CATEGORY_NO
+                            , C.WRITE_NO
+                         FROM POST_COMMENT C
+                        WHERE C.CATEGORY_NO = 1
+                          AND C.WRITE_NO = #{ no }
+                         ORDER BY C.COMMENT_NO
+                         ) B
+                 <![CDATA[
+               WHERE ROWNUM <= #{ endRow }
+                ]]>
+        ) A
+        WHERE A.RNUM >= #{ startRow }
+        ORDER BY 1 DESC
     </select>
 
     <insert id="freeBoardCommentInsert" parameterType="hashmap">
@@ -255,4 +299,11 @@
     <!--         WHERE COMMENT_NO = #{ commentNo }-->
     <!--           AND WRITE_NO = #{ no }-->
     <!--    </update>-->
+
+    <select id="freeBoardCommentsCount" resultType="_int">
+        SELECT
+               COUNT(*)
+          FROM POST_COMMENT
+         WHERE WRITE_NO = #{ no }
+    </select>
 </mapper>

@@ -60,17 +60,40 @@
                 </div>
             </form>
             <div class="pagination">
-                <a th:href="@{/free-board(currentPage=${ 1 },searchCondition=${selectCriteria.searchCondition},
-                     searchValue=${selectCriteria.searchValue})}" class="first-first">&lt;&lt;</a>
-                <a th:href="@{/free-board(currentPage=${ selectCriteria.pageNo -1 },
-                searchCondition=${selectCriteria.searchCondition},searchValue=${selectCriteria.searchValue})}" class="first">&lt;</a>
+                <!-- 맨 앞으로 이동 버튼 -->
+                <button class="first-first"
+                    th:onclick="'location.href=\'/free-board?currentPage='+ @{${selectCriteria.startPage}} +
+                     '&searchCondition=' + @{${ selectCriteria.searchCondition }} +
+                      '&searchValue=' + @{${ selectCriteria.searchValue }} + '\''"
+                    th:disabled="${selectCriteria.pageNo == 1}"><<</button>
+                <!-- 이전 페이지 버튼 -->
+                <button class="first"
+                    th:onclick="'location.href=\'/free-board?currentPage='+ @{${selectCriteria.pageNo - 1}} +
+                     '&searchCondition=' + @{${ selectCriteria.searchCondition }} +
+                      '&searchValue=' + @{${ selectCriteria.searchValue }} + '\''"
+                    th:disabled="${selectCriteria.pageNo == 1}"><</button>
+                <!-- 숫자 버튼 -->
                 <th:block th:each="page : ${#numbers.sequence(selectCriteria.startPage, selectCriteria.endPage)}">
-                    <a th:text="${ page }" th:href="@{/free-board(currentPage=${ page },searchCondition=${selectCriteria.searchCondition},
-                     searchValue=${selectCriteria.searchValue})}"
-                     th:disabled="${ selectCriteria.pageNo == page}" class="active"></a>
+                    <button class="active"
+                        th:text="${ page }"
+                        th:onclick="'location.href=\'/free-board?currentPage='+ @{${page}} +
+                        '&searchCondition=' +@{${ selectCriteria.searchCondition }} +
+                         '&searchValue=' + @{${ selectCriteria.searchValue }} + '\''"
+                        th:disabled="${ selectCriteria.pageNo eq page }"></button>
                 </th:block>
-                <a th:href="" title="" class="last">></a>
-                <a href="" title="" class="last-last">&gt;&gt;</a>
+
+                <!-- 다음 페이지 버튼 -->
+                <button class="last"
+                    th:onclick="'location.href=\'/free-board?currentPage='+ @{${selectCriteria.pageNo + 1}} +
+                     '&searchCondition=' + @{${ selectCriteria.searchCondition }} +
+                      '&searchValue=' +@{${ selectCriteria.searchValue }} + '\''"
+                    th:disabled="${selectCriteria.pageNo == selectCriteria.maxPage}">></button>
+                <!-- 마지막 페이지로 이동 버튼 -->
+                <button class="last-last"
+                    th:onclick="'location.href=\'/free-board?currentPage='+ @{${selectCriteria.maxPage}} +
+                    '&searchCondition=' + @{${ selectCriteria.searchCondition }} +
+                     '&searchValue=' +@{${ selectCriteria.searchValue }} + '\''"
+                    th:disabled="${selectCriteria.pageNo == selectCriteria.maxPage}">>></button>
             </div>
         </div>
     </div>
@@ -84,6 +107,7 @@
 
         alert(message);
     }
+
 </script>
 </body>
 </html>

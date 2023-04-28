@@ -142,3 +142,20 @@ body {
 #form-commentInfo .commentList td .regDate {
     color: #d4d4d4;
 }
+
+.pagination {
+    margin-top: 50px;
+    text-align: center;
+}
+.pagination button {
+    color: #d4d4d4;
+    padding: 0 8px;
+}
+.pagination button:hover {
+    color: #343a40;
+}
+.pagination button.active {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #343a40;
+}
