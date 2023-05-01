@@ -40,7 +40,7 @@
             </div>
         </form>
         <div class="commentCount">
-            댓글 <span th:text="${ selectCriteria.totalCount }"></span> 개
+            <span th:text="${ '댓글 ' + selectCriteria.totalCount + '개'}"></span>
         </div>
         <div class="commentList">
             <table id="commentTable" class="comments-table">
@@ -75,24 +75,23 @@
             </table>
         </div>
         <div class="pagination">
-            <button th:onclick="'location.href=\'/free-board/get/' + @{${ freeBoard.no }} +
-             '?amount=' + @{${ selectCriteria.startPage }} + '\''"
+            <button th:onclick="|location.href='/free-board/get/' + ${ freeBoard.no } + '?amount=' + ${ selectCriteria.startPage }|"
              th:disabled="${ selectCriteria.startPage == 1 }" class="first-first">&lt;&lt;</button>
-<!--            <button th:onclick="'location.href=\'/free-board/get/' + @{${ freeBoard.no }} +-->
-<!--             '?amount=' + @{${selectCriteria.startPage + 1}} + '\''"-->
-<!--             th:disabled="${ selectCriteria.startPage == 1 }" class="first">&lt;</button>-->
-<!--            <th:block th:each="page : ${#numbers.sequence(selectCriteria.startPage, selectCriteria.endPage)}">-->
-<!--                <button th:text="${ page }"-->
-<!--                        th:onclick="'location.href=\'/free-board/get/' + @{${ freeBoard.no }} +-->
-<!--                '?amount=' + @{${page}} + '\''"-->
-<!--                 th:disabled="${ selectCriteria.pageNo == page }" class="active"></button>-->
-<!--            </th:block>-->
-<!--            <button th:onclick="'location.href=\'/free-board/get/' + @{${ freeBoard.no }} +-->
-<!--            '?amount=' + @{${ selectCriteria.pageNo + 1 }} + '\'"-->
-<!--            th:disabled="${ selectCriteria.pageNo == selectCriteria.maxPage }" class="last">></button>-->
-<!--            <button th:onclick="'location.href=\'/free-board/get/' + @{${ freeBoard.no }} +-->
-<!--            '?amount=' + @{${ selectCriteria.maxPage }} + '\'"-->
-<!--             th:disabled="${ selectCriteria.pageNo ==  selectCriteria.maxPage }" class="last-last">&gt;&gt;</button>-->
+            <button th:onclick="'location.href=\'/free-board/get/' + ${ freeBoard.no } +
+             '?amount=' + @{${selectCriteria.startPage + 1}} + '\''"
+             th:disabled="${ selectCriteria.startPage == 1 }" class="first">&lt;</button>
+            <th:block th:each="page : ${#numbers.sequence(selectCriteria.startPage, selectCriteria.endPage)}">
+                <button th:text="${ page }"
+                        th:onclick="'location.href=\'/free-board/get/' + ${ freeBoard.no } +
+                '?amount=' + ${ page } + '\''"
+                 th:disabled="${ selectCriteria.pageNo == page }" class="active"></button>
+            </th:block>
+            <button th:onclick="'location.href=\'/free-board/get/' + ${ freeBoard.no } +
+             '?amount=' + @{${selectCriteria.pageNo - 1}} + '\''"
+            th:disabled="${ selectCriteria.pageNo == selectCriteria.maxPage }" class="last">></button>
+            <button th:onclick="'location.href=\'/free-board/get/' + ${ freeBoard.no } +
+             '?amount=' + @{${selectCriteria.maxPage} + '\''"
+             th:disabled="${ selectCriteria.pageNo ==  selectCriteria.maxPage }" class="last-last">&gt;&gt;</button>
         </div>
     </div>
 </div>
