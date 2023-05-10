@@ -242,63 +242,63 @@
         WHERE COMMENT_NO = #{ commentNo }
     </delete>
 
-    <!--    <update id="freeBoardCommentLikeCount">-->
-    <!--        UPDATE-->
-    <!--               POST_COMMENT A-->
-    <!--           SET A.COMMENT_LIKE = (SELECT B.COMMENT_LIKE-->
-    <!--                                   FROM POST_COMMENT B-->
-    <!--                                  WHERE B.WRITE_NO = #{ no }-->
-    <!--                                    AND B.COMMENT_NO = #{ commentNo }-->
-    <!--                                  ) + 1-->
-    <!--         WHERE WRITE_NO = #{ no }-->
-    <!--           AND COMMENT_NO = #{ commentNo }-->
-    <!--    </update>-->
+        <update id="freeBoardCommentLikeCount">
+            UPDATE
+                   POST_COMMENT A
+               SET A.COMMENT_LIKE = (SELECT B.COMMENT_LIKE
+                                       FROM POST_COMMENT B
+                                      WHERE B.WRITE_NO = #{ no }
+                                        AND B.COMMENT_NO = #{ commentNo }
+                                      ) + 1
+             WHERE WRITE_NO = #{ no }
+               AND COMMENT_NO = #{ commentNo }
+        </update>
 
-    <!--    <insert id="freeBoardCommentLike">-->
-    <!--        INSERT-->
-    <!--          INTO COMMENT_LIKE-->
-    <!--        (-->
-    <!--          COMMENT_NO-->
-    <!--        , MEMBER_NICKNAME-->
-    <!--        , CATEGORY_NO-->
-    <!--        , WRITE_NO-->
-    <!--        , STATE_YN-->
-    <!--        )-->
-    <!--        VALUES-->
-    <!--        (-->
-    <!--          #{ commentNo }-->
-    <!--        , #{ loginUser }-->
-    <!--        , 1-->
-    <!--        , #{ no }-->
-    <!--        , 'Y'-->
-    <!--        )-->
-    <!--    </insert>-->
+        <insert id="freeBoardCommentLike">
+            INSERT
+              INTO COMMENT_LIKE
+            (
+              COMMENT_NO
+            , MEMBER_NICKNAME
+            , CATEGORY_NO
+            , WRITE_NO
+            , STATE_YN
+            )
+            VALUES
+            (
+              #{ commentNo }
+            , #{ loginUser }
+            , 1
+            , #{ no }
+            , 'Y'
+            )
+        </insert>
 
-    <!--    <select id="freeBoardSelectCommentLike" resultMap="commentLikeResultMap">-->
-    <!--        SELECT-->
-    <!--               *-->
-    <!--          FROM COMMENT_LIKE-->
-    <!--         WHERE MEMBER_NICKNAME = #{ loginUser }-->
-    <!--           AND WRITE_NO = #{ no }-->
-    <!--           AND CATEGORY_NO = 1-->
-    <!--           AND STATE_YN = 'Y'-->
-    <!--    </select>-->
+        <select id="freeBoardSelectCommentLike" resultMap="commentLikeResultMap">
+            SELECT
+                   *
+              FROM COMMENT_LIKE
+             WHERE MEMBER_NICKNAME = #{ loginUser }
+               AND WRITE_NO = #{ no }
+               AND CATEGORY_NO = 1
+               AND STATE_YN = 'Y'
+        </select>
 
-    <!--    <delete id="freeBoardCommentLikeCancle">-->
-    <!--        DELETE-->
-    <!--          FROM COMMENT_LIKE-->
-    <!--         WHERE COMMENT_NO = #{ commentNo }-->
-    <!--           AND WRITE_NO = #{ no }-->
-    <!--           AND MEMBER_NICKNAME = #{ loginUser }-->
-    <!--    </delete>-->
+        <delete id="freeBoardCommentLikeCancle">
+            DELETE
+              FROM COMMENT_LIKE
+             WHERE COMMENT_NO = #{ commentNo }
+               AND WRITE_NO = #{ no }
+               AND MEMBER_NICKNAME = #{ loginUser }
+        </delete>
 
-    <!--    <update id="freeBoardCommentLikeMinusCount">-->
-    <!--        UPDATE-->
-    <!--               POST_COMMENT-->
-    <!--           SET COMMENT_LIKE = COMMENT_LIKE - 1-->
-    <!--         WHERE COMMENT_NO = #{ commentNo }-->
-    <!--           AND WRITE_NO = #{ no }-->
-    <!--    </update>-->
+        <update id="freeBoardCommentLikeMinusCount">
+            UPDATE
+                   POST_COMMENT
+               SET COMMENT_LIKE = COMMENT_LIKE - 1
+             WHERE COMMENT_NO = #{ commentNo }
+               AND WRITE_NO = #{ no }
+        </update>
 
     <select id="freeBoardCommentsCount" resultType="_int">
         SELECT

@@ -59,12 +59,9 @@
                         </td>
                         <td class="content" th:text="${comment.content}"></td>
 <!--                        <td style="width: 135px" th:text="${'추천 : ' + comment.commentLike}"></td>-->
-<!--                            <td class="commentLike-like">-->
-<!--                                <button class="likeBtn" th:onclick="commentLike([[${freeBoard.no}]],[[${comment.commentNo}]]);">추천</button>-->
-<!--                            </td>-->
-<!--                        <th:block th:each="like : ${selectLike}">-->
-<!--                            <td class="commentLike-like" th:if="${like.stateYn == 'Y'}">-->
-<!--                                <button class="likeBtn" th:onclick="commentLikeCancel([[${freeBoard.no}]],[[${comment.commentNo}]]);">추천 취소</button>-->
+<!--                        <th:block th:each=" selectLike : ${ selectLike }">-->
+<!--                            <td class="commentLike-like" th:if="${selectLike.stateYn == 'Y'}">-->
+<!--                                <button class="likeCancelBtn" th:onclick="commentLikeCancel([[${freeBoard.no}]],[[${comment.commentNo}]]);">추천 취소</button>-->
 <!--                            </td>-->
 <!--                        </th:block>-->
                         <td class="commentLike-delete" th:if="${comment.writer == #authentication.getPrincipal().getNickname()}">
@@ -75,11 +72,12 @@
             </table>
         </div>
         <div class="pagination">
-            <button th:onclick="|location.href='/free-board/get/' + ${ freeBoard.no } + '?amount=' + ${ selectCriteria.startPage }|"
-             th:disabled="${ selectCriteria.startPage == 1 }" class="first-first">&lt;&lt;</button>
             <button th:onclick="'location.href=\'/free-board/get/' + ${ freeBoard.no } +
-             '?amount=' + @{${selectCriteria.startPage + 1}} + '\''"
-             th:disabled="${ selectCriteria.startPage == 1 }" class="first">&lt;</button>
+             '?amount=' + ${ selectCriteria.startPage } + '\''"
+                    th:disabled="${ selectCriteria.pageNo ==  selectCriteria.startPage }" class="last-last"><<</button>
+            <button th:onclick="'location.href=\'/free-board/get/' + ${ freeBoard.no } +
+             '?amount=' + ${selectCriteria.pageNo - 1} + '\''"
+                    th:disabled="${ selectCriteria.pageNo == selectCriteria.startPage }" class="last"><</button>
             <th:block th:each="page : ${#numbers.sequence(selectCriteria.startPage, selectCriteria.endPage)}">
                 <button th:text="${ page }"
                         th:onclick="'location.href=\'/free-board/get/' + ${ freeBoard.no } +
@@ -87,10 +85,10 @@
                  th:disabled="${ selectCriteria.pageNo == page }" class="active"></button>
             </th:block>
             <button th:onclick="'location.href=\'/free-board/get/' + ${ freeBoard.no } +
-             '?amount=' + @{${selectCriteria.pageNo - 1}} + '\''"
+             '?amount=' + ${selectCriteria.pageNo + 1} + '\''"
             th:disabled="${ selectCriteria.pageNo == selectCriteria.maxPage }" class="last">></button>
             <button th:onclick="'location.href=\'/free-board/get/' + ${ freeBoard.no } +
-             '?amount=' + @{${selectCriteria.maxPage} + '\''"
+             '?amount=' + ${ selectCriteria.maxPage } + '\''"
              th:disabled="${ selectCriteria.pageNo ==  selectCriteria.maxPage }" class="last-last">&gt;&gt;</button>
         </div>
     </div>
@@ -133,15 +131,15 @@
         window.location.reload();
     }
 
-    // function commentLikeCancel(no, commentNo){
-    //     $.post("/free-board/comment/like-cancel/" + no + "/" + commentNo);
-    //     window.location.reload();
-    // }
-    //
-    // function commentLike(no, commentNo){
-    //     $.post("/free-board/comment/like/" + no + "/" + commentNo)
-    //     window.location.reload();
-    // }
+    function commentLikeCancel(no, commentNo){
+        $.post("/free-board/comment/like-cancel/" + no + "/" + commentNo);
+        window.location.reload();
+    }
+
+    function commentLike(no, commentNo){
+        $.post("/free-board/comment/like/" + no + "/" + commentNo)
+        window.location.reload();
+    }
 
     $('#commentInsertBtn').click(function(){
 
@@ -156,7 +154,6 @@
 
         return true;
     });
-
 </script>
 </html>
 
