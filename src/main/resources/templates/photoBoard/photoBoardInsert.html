@@ -14,7 +14,7 @@
     <link rel="stylesheet" th:href="@{/css/summernote/summernote-lite.css}">
 
     <link rel="stylesheet" th:href="@{/css/common/reset.css}">
-    <link rel="stylesheet" th:href="@{/css/freeBoard/freeBoardInsert.css}">
+    <link rel="stylesheet" th:href="@{/css/photo/photoBoardInsert.css}">
 
 </head>
 <body>
@@ -23,7 +23,7 @@
     <h3>게시글 작성</h3>
     <br>
 
-    <form th:action="@{/free-board/write}" method="post">
+    <form th:action="@{/photo-board/write}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="writer" th:value="${#authentication.getPrincipal().getNickname()}">
         <table class="table">
             <colgroup>
@@ -43,11 +43,17 @@
                     <textarea id="summernote" type="text" name="contents" rows="10"></textarea>
                 </td>
             </tr>
+            <tr>
+                <th>첨부 파일</th>
+                <td>
+                    <input type="file" name="fileName">
+                </td>
+            </tr>
             </tbody>
         </table>
         <div class="input-group">
             <button class="btn btn-warning" type="submit">등록</button>
-            <button class="btn btn-warning" type="button" th:onclick="|location.href='@{/free-board}'|">취소</button>
+            <button class="btn btn-warning" type="button" th:onclick="|location.href='@{/photo-board}'|">취소</button>
         </div>
     </form>
 </div>
@@ -58,9 +64,9 @@
         height: 300,
         // 에디터 한글 설정
         lang: "ko-KR",
-            // 에디터에 커서 이동 (input창의 autofocus라고 생각)
-            focus: true,
-            toolbar: [
+        // 에디터에 커서 이동 (input창의 autofocus라고 생각)
+        focus: true,
+        toolbar: [
             // 글꼴 설정
             ['fontname', ['fontname']],
             // 글자 크기 설정
@@ -77,13 +83,15 @@
             ['height', ['height']],
             // 코드보기, 확대해서보기, 도움말
             ['view', ['codeview', 'fullscreen', 'help']]
-            ],
-            // 추가한 글꼴
-            fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋음체', '바탕체'],
-            // 추가한 폰트사이즈
-            fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36', '50', '72']
-            });
+        ],
+        // 추가한 글꼴
+        fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋음체', '바탕체'],
+        // 추가한 폰트사이즈
+        fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36', '50', '72']
+    });
+
 </script>
 
 </body>
 </html>
+

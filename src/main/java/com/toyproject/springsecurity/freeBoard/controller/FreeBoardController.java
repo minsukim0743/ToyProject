@@ -168,6 +168,7 @@ public class FreeBoardController {
         return url;
     }
 
+    @ApiOperation(value = "자유게시판 댓글 등록 메소드", notes = "해당 게시글 번호와 작성자 계정 ID를 받아 댓글 작성")
     @PostMapping("/comment/post")
     public String freeBoardInsert(@RequestParam Map<String, String> paramMap, RedirectAttributes rttr){
 
@@ -185,6 +186,7 @@ public class FreeBoardController {
         return url;
     }
 
+    @ApiOperation(value = "자유게시판 댓글 삭제", notes = "해당 게시글 번호와 작성자 계정 ID를 받아 댓글 삭제")
     @PostMapping("/comment/{no}/{commentNo}")
     public String freeBoardCommentDelete(@PathVariable int commentNo, @PathVariable int no,
                                          RedirectAttributes rttr){
@@ -200,39 +202,39 @@ public class FreeBoardController {
         return url;
     }
 
-    @PostMapping("/comment/like/{no}/{commentNo}")
-    public String freeBoardCommentLike(@PathVariable int no, @PathVariable int commentNo, Principal principal
-                                       ,RedirectAttributes rttr){
-
-        String loginUser = principal.getName();
-
-        String url = "redirect:/free-board/get/" + no;
-
-        int result = freeBoardService.freeBoardCommentLike(commentNo, no, loginUser);
-        int result2 = freeBoardService.freeBoardCommentLikeCount(commentNo, no);
-
-        if(result != 1 && result2 != 1){
-            rttr.addFlashAttribute("commentLikeFail", "댓글 추천에 실패하였습니다.");
-        }
-
-        return url;
-    }
-
-    @PostMapping("/comment/like-cancel/{no}/{commentNo}")
-    public String freeBoardLikeCancle(@PathVariable int no, @PathVariable int commentNo, Principal principal
-            ,RedirectAttributes rttr){
-
-        String loginUser = principal.getName();
-
-        String url = "redirect:/free-board/get/" + no;
-
-        int result = freeBoardService.freeBoardCommentLikeCancle(commentNo, no, loginUser);
-        int result2 = freeBoardService.freeBoardCommentLikeMinusCount(commentNo, no);
-
-        if(result != 1 && result2 != 1){
-            rttr.addFlashAttribute("commentLikeCancelFail", "댓글 추천 취소에 실패하였습니다.");
-        }
-
-        return url;
-    }
+//    @PostMapping("/comment/like/{no}/{commentNo}")
+//    public String freeBoardCommentLike(@PathVariable int no, @PathVariable int commentNo, Principal principal
+//                                       ,RedirectAttributes rttr){
+//
+//        String loginUser = principal.getName();
+//
+//        String url = "redirect:/free-board/get/" + no;
+//
+//        int result = freeBoardService.freeBoardCommentLike(commentNo, no, loginUser);
+//        int result2 = freeBoardService.freeBoardCommentLikeCount(commentNo, no);
+//
+//        if(result != 1 && result2 != 1){
+//            rttr.addFlashAttribute("commentLikeFail", "댓글 추천에 실패하였습니다.");
+//        }
+//
+//        return url;
+//    }
+//
+//    @PostMapping("/comment/like-cancel/{no}/{commentNo}")
+//    public String freeBoardLikeCancle(@PathVariable int no, @PathVariable int commentNo, Principal principal
+//            ,RedirectAttributes rttr){
+//
+//        String loginUser = principal.getName();
+//
+//        String url = "redirect:/free-board/get/" + no;
+//
+//        int result = freeBoardService.freeBoardCommentLikeCancle(commentNo, no, loginUser);
+//        int result2 = freeBoardService.freeBoardCommentLikeMinusCount(commentNo, no);
+//
+//        if(result != 1 && result2 != 1){
+//            rttr.addFlashAttribute("commentLikeCancelFail", "댓글 추천 취소에 실패하였습니다.");
+//        }
+//
+//        return url;
+//    }
 }

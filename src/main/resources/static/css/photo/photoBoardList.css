@@ -1,0 +1,89 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400&display=swap');
+
+body {
+  background-color: #f8f9fd;
+}
+
+.container {
+  max-width: 1140px;
+  width: 100%;
+  padding: 70px 30px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+.container table {
+  border-collapse:separate;
+  border-spacing: 0 10px;
+}
+.container table tr {
+  box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);
+}
+.container table th,
+.container table td {
+  padding: 20px 15px;
+  text-align: left;
+
+}
+.container table th {
+  background-color: #343a40;
+  color: #fff;
+}
+
+.container table td {
+  background-color: #ffffff;
+}
+.container .input-btn {
+  text-align: right;
+  margin-bottom: 10px;
+}
+.container .input-btn a,
+.container .input-group button {
+  padding: 8px 20px;
+  background-color: #343a40;
+  border: 1px solid #343a40;
+  color: #fff;
+  cursor: pointer;
+}
+.container .input-btn a:hover,
+.container .input-group button:hover  {
+  /*background-color: #d4d4d4;*/
+  background-color: #fff;
+  color: #343a40;
+}
+
+.container .input-group {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.container .input-group input,
+.container .input-group select {
+  border: 1px solid #d4d4d4;
+  background-color: #fff;
+  padding: 10px 20px;
+  vertical-align: middle;
+}
+.container .input-group select{
+  text-align: center;
+}
+.container .input-group input {
+  width: 300px;
+}
+.container .pagination {
+  margin-top: 50px;
+  text-align: center;
+}
+.container .pagination button {
+  color: #d4d4d4;
+  padding: 0 8px;
+}
+.container .pagination button:hover {
+  color: #343a40;
+}
+.container .pagination button.active {
+  text-decoration: underline;
+  font-weight: bold;
+  color: #343a40;
+}
