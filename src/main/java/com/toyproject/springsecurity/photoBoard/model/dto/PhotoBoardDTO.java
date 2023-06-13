@@ -12,11 +12,12 @@ public class PhotoBoardDTO {
     private String deleteYn;
     private String fileName;
     private String filePath;
+    private String changeFileName;
 
     public PhotoBoardDTO(){}
 
     public PhotoBoardDTO(int no, String title, String contents, int count, String registTime, String writer,
-                        String updateTime, String deleteYn, String fileName, String filePath) {
+                        String updateTime, String deleteYn, String fileName, String filePath, String changeFileName) {
         this.no = no;
         this.title = title;
         this.contents = contents;
@@ -27,6 +28,7 @@ public class PhotoBoardDTO {
         this.deleteYn = deleteYn;
         this.fileName = fileName;
         this.filePath = filePath;
+        this.changeFileName=changeFileName;
     }
 
     public String getFileName(){
@@ -113,6 +115,12 @@ public class PhotoBoardDTO {
         this.deleteYn = deleteYn;
     }
 
+    public void setChangeFileName(String changeFileName){
+        this.changeFileName = changeFileName;
+    }
+
+    public String getChangeFileName(){return changeFileName;}
+
     @Override
     public String toString() {
         return "FreeBoardDTO{" +
@@ -126,6 +134,7 @@ public class PhotoBoardDTO {
                 ", deleteYn='" + deleteYn + '\'' +
                 ", fileName='" + fileName + '\'' +
                 ", filePath='" + filePath + '\'' +
+                ", changeFileName='" + changeFileName +
                 '}';
     }
 }

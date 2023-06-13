@@ -50,7 +50,6 @@ public class PhotoBoardController {
     @PostMapping("/write")
     public String photoBoardInsert(){
 
-
         return "";
     }
 }
