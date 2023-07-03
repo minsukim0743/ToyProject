@@ -23,12 +23,12 @@ public class MemberDTO implements UserDetails {
     private Date enrollDate;
     private String memberStatus;
     private String memberRole;
-
     private String emailCode;
+    private int memberUse;
 
     public MemberDTO() {}
 
-    public MemberDTO(Long memberNo, String memberId, String memberPwd, String nickname, String phone, String email, String address, Date enrollDate, String memberStatus, String memberRole, String emailCode) {
+    public MemberDTO(Long memberNo, String memberId, String memberPwd, String nickname, String phone, String email, String address, Date enrollDate, String memberStatus, String memberRole, String emailCode, int memberUse) {
         this.memberNo = memberNo;
         this.memberId = memberId;
         this.memberPwd = memberPwd;
@@ -40,7 +40,17 @@ public class MemberDTO implements UserDetails {
         this.memberStatus = memberStatus;
         this.memberRole = memberRole;
         this.emailCode = emailCode;
+        this.memberUse = memberUse;
+    }
 
+    public void setMemberUse(int memberUse){
+
+        this.memberUse = memberUse;
+    }
+
+    public int getMemberUse(){
+
+        return memberUse;
     }
 
     public Long getMemberNo() {
@@ -145,6 +155,7 @@ public class MemberDTO implements UserDetails {
                 ", memberStatus='" + memberStatus + '\'' +
                 ", memberRole='" + memberRole + '\'' +
                 ", emailCode='" + emailCode + '\'' +
+                ", memberUse='" + memberUse + '\'' +
                 '}';
     }
 

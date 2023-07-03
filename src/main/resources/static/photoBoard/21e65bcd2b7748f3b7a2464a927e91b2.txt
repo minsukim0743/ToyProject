@@ -1,0 +1,36 @@
+JAR_FILE=실행파일명 설정
+APP_PATH=실행파일경로 설정
+APP_NAME=파일명 설정
+
+PID=`ps -ef | grep $JAR_FILE` | grep $USER | grep -v grep | awk '{print $2}'`
+
+
+case "$1" in
+start)
+
+if [ "$PID" == "" ]; then
+	# > 로그 출력 /dev/null 2>&1 & 표준 에러출력 무시
+	java -jar $APP_PATH$JAR_FILE --spring.confg.location=$APP_PATH/설정파일경로/설정파일명 --APP_NAME=$APP_NAME > /dev/null 2>&1 &
+	echo "$APP_NAME start success"
+else 
+	echo "already PID : $PID"
+	exit 0
+fi
+;;
+
+stop)
+
+if [ "$PID" == "" ]; then
+	ehco "is not running"
+	exit 0
+else 
+	kill -9 $PID
+	echo "kill $APP_NAME $PID"
+	exit 0
+fi
+;;
+
+esac
+
+
+

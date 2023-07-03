@@ -17,6 +17,7 @@
         <result property="memberStatus" column="MEMBER_YN"/>
         <result property="memberRole" column="MEMBER_ROLE"/>
         <result property="emailCode" column="EMAIL_CODE"/>
+        <result property="memberUse" column="MEMBER_USE"/>
     </resultMap>
 
     <!-- 회원가입 -->
@@ -26,13 +27,13 @@
         (
           MEMBER_NO, MEMBER_ID, MEMBER_PWD
         , NICKNAME, PHONE, EMAIL
-        , ADDRESS, ENROLL_DATE, MEMBER_YN, MEMBER_ROLE
+        , ADDRESS, ENROLL_DATE, MEMBER_YN, MEMBER_ROLE,MEMBER_USE
         )
         VALUES
         (
           SEQ_MEMBER_NO.NEXTVAL, #{ memberId }, #{ memberPwd }
         , #{ nickname }, #{ phone }, #{ email }
-        , #{ address }, DEFAULT, 'Y', 'ROLE_USER'
+        , #{ address }, DEFAULT, 'Y', 'ROLE_USER', 0
         )
     </insert>
 
@@ -58,9 +59,11 @@
              , ENROLL_DATE
              , MEMBER_YN
              , MEMBER_ROLE
+             , MEMBER_USE
          FROM MEMBER
         WHERE MEMBER_YN = 'Y'
           AND MEMBER_ID = #{ memberId }
+
     </select>
 
     <!-- DB 이메일 인증코드 설정 -->

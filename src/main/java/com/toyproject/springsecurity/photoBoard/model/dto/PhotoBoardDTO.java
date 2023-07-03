@@ -10,14 +10,12 @@ public class PhotoBoardDTO {
     private String writer;
     private String updateTime;
     private String deleteYn;
-    private String fileName;
-    private String filePath;
-    private String changeFileName;
+    private PhotoBoardFileDTO photoBoardFile;
 
     public PhotoBoardDTO(){}
 
     public PhotoBoardDTO(int no, String title, String contents, int count, String registTime, String writer,
-                        String updateTime, String deleteYn, String fileName, String filePath, String changeFileName) {
+                        String updateTime, String deleteYn) {
         this.no = no;
         this.title = title;
         this.contents = contents;
@@ -26,28 +24,6 @@ public class PhotoBoardDTO {
         this.writer = writer;
         this.updateTime = updateTime;
         this.deleteYn = deleteYn;
-        this.fileName = fileName;
-        this.filePath = filePath;
-        this.changeFileName=changeFileName;
-    }
-
-    public String getFileName(){
-
-        return fileName;
-    }
-
-    public String getFilePath(){
-
-        return filePath;
-    }
-
-    public void setFilePath(String filePath){
-
-        this.filePath = filePath;
-    }
-
-    public void setFileName(String fileName){
-        this.fileName = fileName;
     }
 
     public int getNo(){
@@ -115,12 +91,6 @@ public class PhotoBoardDTO {
         this.deleteYn = deleteYn;
     }
 
-    public void setChangeFileName(String changeFileName){
-        this.changeFileName = changeFileName;
-    }
-
-    public String getChangeFileName(){return changeFileName;}
-
     @Override
     public String toString() {
         return "FreeBoardDTO{" +
@@ -132,9 +102,7 @@ public class PhotoBoardDTO {
                 ", writer='" + writer + '\'' +
                 ", updateTime=" + updateTime + '\'' +
                 ", deleteYn='" + deleteYn + '\'' +
-                ", fileName='" + fileName + '\'' +
-                ", filePath='" + filePath + '\'' +
-                ", changeFileName='" + changeFileName +
+                ", photoBoardFileDTO='" + photoBoardFile + '\'' +
                 '}';
     }
 }
