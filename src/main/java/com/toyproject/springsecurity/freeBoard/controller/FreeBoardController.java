@@ -1,6 +1,5 @@
 package com.toyproject.springsecurity.freeBoard.controller;
 
-import com.toyproject.springsecurity.common.comment.dto.CommentLikeDTO;
 import com.toyproject.springsecurity.common.util.Pagenation;
 import com.toyproject.springsecurity.common.util.SelectCriteria;
 import com.toyproject.springsecurity.freeBoard.model.dto.FreeBoardDTO;

@@ -14,7 +14,7 @@
     <link rel="stylesheet" th:href="@{/css/summernote/summernote-lite.css}">
 
     <link rel="stylesheet" th:href="@{/css/common/reset.css}">
-    <link rel="stylesheet" th:href="@{/css/photo/photoBoardInsert.css}">
+    <link rel="stylesheet" th:href="@{/css/photoBoard/photoBoardInsert.css}">
 
 </head>
 <body>
@@ -23,7 +23,7 @@
     <h3>게시글 작성</h3>
     <br>
 
-    <form th:action="@{/photo-board/write}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/photo-board/write}" method="post" enctype="multipart/form-data" onsubmit="return onSubmit()">
         <input type="hidden" name="writer" th:value="${#authentication.getPrincipal().getNickname()}">
         <table class="table">
             <colgroup>
@@ -46,7 +46,7 @@
             <tr>
                 <th>첨부 파일</th>
                 <td>
-                    <input type="file" name="file">
+                    <input type="file" name="file" class="file" accept=".jpg, .png, .gif" onchange="checkFile(this)">
                 </td>
             </tr>
             </tbody>
@@ -89,6 +89,18 @@
         // 추가한 폰트사이즈
         fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36', '50', '72']
     });
+
+    // 업로드 파일 null 경우 alert
+    function onSubmit() {
+
+        if ($(".file").val() === "") {
+
+            alert("파일을 업로드해주세요.");
+            return false;
+        }
+
+        return true;
+    }
 
 </script>
 

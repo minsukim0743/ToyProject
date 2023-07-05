@@ -15,7 +15,7 @@ public class PhotoBoardDTO {
     public PhotoBoardDTO(){}
 
     public PhotoBoardDTO(int no, String title, String contents, int count, String registTime, String writer,
-                        String updateTime, String deleteYn) {
+                        String updateTime, String deleteYn, PhotoBoardFileDTO photoBoardFile) {
         this.no = no;
         this.title = title;
         this.contents = contents;
@@ -24,6 +24,15 @@ public class PhotoBoardDTO {
         this.writer = writer;
         this.updateTime = updateTime;
         this.deleteYn = deleteYn;
+        this.photoBoardFile = photoBoardFile;
+    }
+
+    public PhotoBoardFileDTO getPhotoBoardFile() {
+        return photoBoardFile;
+    }
+
+    public void setPhotoBoardFile(PhotoBoardFileDTO photoBoardFile) {
+        this.photoBoardFile = photoBoardFile;
     }
 
     public int getNo(){
@@ -93,7 +102,7 @@ public class PhotoBoardDTO {
 
     @Override
     public String toString() {
-        return "FreeBoardDTO{" +
+        return "photoBoardDTO{" +
                 "no=" + no +
                 ", title='" + title + '\'' +
                 ", contents='" + contents + '\'' +

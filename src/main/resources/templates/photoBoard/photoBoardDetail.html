@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>ToyProject</title>
+    <meta charset="utf-8">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <link rel="stylesheet" th:href="@{/css/common/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/photoBoard/photoBoardDetail.css}">
+</head>
+<body>
+
+<th:block layout:fragment="header" th:include="/fragments/header" class="title"></th:block>
+<div class="container">
+    <div class="title-box">
+        <p th:text="'조회수 : ' + ${photoBoard.count}" class="count"></p>
+        <p th:text="${photoBoard.title}" class="title"></p>
+    </div>
+    <div class="text-box">
+         <p th:text="'작성자 : ' + ${photoBoard.writer}" class="writer"></p>
+        <p th:utext="${photoBoard.contents}" class="contents"></p>
+    </div>
+    <th:block th:if="${photoBoard.writer == #authentication.getPrincipal().getNickname()}">
+        <div class="input-btn">
+            <a th:href="@{/photo-board/put/{no}(no=${photoBoard.no})}">수정</a>
+        </div>
+    </th:block>
+    <div id="form-commentInfo">
+        <h4>Comment</h4>
+        <form name="commentInsertForm" class="commentInsertForm" th:action="@{/photo-board/comment/post}" method="post">
+            <div class="input-group">
+                <input type="hidden" name="no" th:value="${ photoBoard.no }">
+                <input type="hidden" id="writer" name="writer" th:value="${ #authentication.getPrincipal().getNickname() }">
+                <input type="text" id="comment-input" class="commentContent" name="content" placeholder="내용을 입력해주세요.">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit" id="commentInsertBtn">등록</button>
+                </span>
+            </div>
+        </form>
+        <div class="commentCount">
+            <span th:text="${ '댓글 ' + selectCriteria.totalCount + '개'}"></span>
+        </div>
+        <div class="commentList">
+            <table id="commentTable" class="comments-table">
+                <colgroup>
+                    <col style="width: 200px;">
+                    <col>
+                    <col style="width: 90px;">
+                    <col style="width: 90px;">
+                </colgroup>
+                <tbody id="tableBody">
+                <tr th:each="comment : ${comments}">
+                    <input type="hidden" name="commentNo" th:value="${comment.commentNo}">
+                    <td class="writer-regDate">
+                        <p class="writer" th:text="${comment.writer}"></p>
+                        <p class="regDate" th:text="${comment.regDate}"></p>
+                    </td>
+                    <td class="content" th:text="${comment.content}"></td>
+                    <!--                        <td style="width: 135px" th:text="${'추천 : ' + comment.commentLike}"></td>-->
+                    <!--                        <th:block th:each=" selectLike : ${ selectLike }">-->
+                    <!--                            <td class="commentLike-like" th:if="${selectLike.stateYn == 'Y'}">-->
+                    <!--                                <button class="likeCancelBtn" th:onclick="commentLikeCancel([[${freeBoard.no}]],[[${comment.commentNo}]]);">추천 취소</button>-->
+                    <!--                            </td>-->
+                    <!--                        </th:block>-->
+                    <td class="commentLike-delete" th:if="${comment.writer == #authentication.getPrincipal().getNickname()}">
+                        <button class="deleteBtn" th:onclick="commentDelete([[${freeBoard.no}]],[[${comment.commentNo}]]);">삭제</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            <button th:onclick="'location.href=\'/photo-board/get/' + ${ photoBoard.no } +
+             '?amount=' + ${ selectCriteria.startPage } + '\''"
+                    th:disabled="${ selectCriteria.pageNo ==  selectCriteria.startPage }" class="last-last"><<</button>
+            <button th:onclick="'location.href=\'/photo-board/get/' + ${ photoBoard.no } +
+             '?amount=' + ${selectCriteria.pageNo - 1} + '\''"
+                    th:disabled="${ selectCriteria.pageNo == selectCriteria.startPage }" class="last"><</button>
+            <th:block th:each="page : ${#numbers.sequence(selectCriteria.startPage, selectCriteria.endPage)}">
+                <button th:text="${ page }"
+                        th:onclick="'location.href=\'/photo-board/get/' + ${ photoBoard.no } +
+                '?amount=' + ${ page } + '\''"
+                        th:disabled="${ selectCriteria.pageNo == page }" class="active"></button>
+            </th:block>
+            <button th:onclick="'location.href=\'/photo-board/get/' + ${ photoBoard.no } +
+             '?amount=' + ${selectCriteria.pageNo + 1} + '\''"
+                    th:disabled="${ selectCriteria.pageNo == selectCriteria.maxPage }" class="last">></button>
+            <button th:onclick="'location.href=\'/photo-board/get/' + ${ photoBoard.no } +
+             '?amount=' + ${ selectCriteria.maxPage } + '\''"
+                    th:disabled="${ selectCriteria.pageNo ==  selectCriteria.maxPage }" class="last-last">&gt;&gt;</button>
+        </div>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    const message = [[${message}]];
+    const commentFail = [[${commentFail}]];
+    const commentDeleteFail = [[${commentDeleteFail}]];
+    const commentLikeFail = [[${commentLikeFail}]];
+    const commentLikeCancelFail = [[${commentLikeCancelFail}]];
+
+    if(message != null && message != ''){
+
+        alert(message);
+    }
+
+    if(commentFail != null && commentFail != ''){
+
+        alert(commentFail);
+    }
+
+    if(commentDeleteFail != null && commentDeleteFail != ''){
+
+        alert(commentDeleteFail);
+    }
+
+    if(commentLikeFail != null && commentLikeFail != ''){
+
+        alert(commentLikeFail);
+    }
+
+    if(commentLikeCancelFail != null && commentLikeCancelFail != ''){
+
+        alert(commentLikeCancelFail);
+    }
+
+    function commentDelete(no, commentNo){
+        $.post("/free-board/comment/" + no + "/" + commentNo);
+        window.location.reload();
+    }
+
+    function commentLikeCancel(no, commentNo){
+        $.post("/free-board/comment/like-cancel/" + no + "/" + commentNo);
+        window.location.reload();
+    }
+
+    function commentLike(no, commentNo){
+        $.post("/free-board/comment/like/" + no + "/" + commentNo)
+        window.location.reload();
+    }
+
+    $('#commentInsertBtn').click(function(){
+
+        let comment = $('.commentContent').val().trim();
+
+        if(comment == "" || comment == null){
+
+            alert("댓글을 입력해주세요.");
+            id.focus();
+            return false;
+        }
+
+        return true;
+    });
+</script>
+</html>
+

@@ -13,6 +13,7 @@
         <result property="registTime" column="REGIST_TIME"/>
         <result property="writer" column="WRITER"/>
         <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="deleteYn" column="DELETE_YN"/>
     </resultMap>
 
     <resultMap id="commentResultMap" type="CommentDTO">

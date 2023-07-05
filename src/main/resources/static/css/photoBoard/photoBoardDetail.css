@@ -1,0 +1,161 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400&display=swap');
+
+
+body {
+    background-color: #f8f9fd;
+}
+
+.container {
+    max-width: 1140px;
+    width: 100%;
+    padding: 70px 30px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.container .title-box {
+    font-size: 30px;
+    font-weight: bold;
+    /*padding-bottom: 20px;*/
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px 80px 20px 10px;
+    position: relative;
+    width: 100%;
+}
+.container .title-box .count {
+    font-size: 12px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.container .text-box {
+    background-color: #fff;
+    margin: 20px 0;
+    padding: 50px 20px;
+    position: relative;
+}
+.container .text-box .writer {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    font-weight: bold;
+}
+.container .input-btn {
+    text-align: right;
+    margin-bottom: 10px;
+}
+.container .input-btn a,
+.container .input-group button,
+#form-commentInfo .commentList td button {
+    padding: 8px 20px;
+    background-color: #343a40;
+    border: 1px solid #343a40;
+    color: #fff;
+    cursor: pointer;
+}
+.container .input-btn a:hover,
+.container .input-group button:hover,
+#form-commentInfo .commentList td button:hover  {
+    /*background-color: #d4d4d4;*/
+    background-color: #fff;
+    color: #343a40;
+}
+#form-commentInfo {
+    padding-top: 80px;
+}
+#form-commentInfo >  h4 {
+    margin: 0 0 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #343a40;
+    font-size: 18px;
+    font-weight: bold;
+}
+#form-commentInfo .commentInsertForm .input-group {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+#form-commentInfo .commentInsertForm .input-group-btn {
+    flex-basis: fit-content;
+    flex-shrink: 0;
+
+}
+#form-commentInfo .commentInsertForm .input-group input {
+    width: 100%;
+    flex-basis: auto;
+    border: 1px solid #d4d4d4;
+}
+#form-commentInfo .commentCount {
+    border-bottom: 1px solid #343a40;
+    padding: 10px 0;
+}
+#form-commentInfo .commentCount span {
+    font-weight: bold;
+}
+#form-commentInfo .commentList table {
+    border-collapse:separate;
+    border-spacing: 0 20px;
+    display: block;
+}
+#form-commentInfo .commentList table tbody {
+    display: block;
+}
+#form-commentInfo .commentList tr {
+    background-color: #fff;
+    box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+#form-commentInfo .commentList td {
+    padding: 10px;
+}
+#form-commentInfo .commentList .writer-regDate {
+    flex-basis: 200px;
+    flex-shrink: 0;
+}
+#form-commentInfo .commentList .content {
+    width: 100%;
+}
+#form-commentInfo .commentList .commentLike-like {
+    flex-basis: 90px;
+    flex-shrink: 0;
+    text-align: center;
+}
+#form-commentInfo .commentList .commentLike-delete {
+    flex-basis: 90px;
+    flex-shrink: 0;
+}
+#form-commentInfo .commentList td button {
+    background-color: #d4d4d4;
+    border-color: #d4d4d4;
+}
+#form-commentInfo .commentList td button:hover {
+    color: #d4d4d4;
+}
+#form-commentInfo .commentList td .regDate {
+    color: #d4d4d4;
+}
+
+.pagination {
+    margin-top: 50px;
+    text-align: center;
+}
+.pagination button {
+    color: #d4d4d4;
+    padding: 0 8px;
+}
+.pagination button:hover {
+    color: #343a40;
+}
+.pagination button.active {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #343a40;
+}

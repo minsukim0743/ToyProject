@@ -35,7 +35,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="freeBoard : ${freeBoardList}" style="cursor: pointer">
+                        <tr th:each="freeBoard : ${freeBoardList}" style="cursor: pointer">
                                 <td th:text="${freeBoard.no}"></td>
                                 <td th:text="${freeBoard.writer}"></td>
                                 <td><a th:href="@{/free-board/get/{no}(no=${freeBoard.no})}"
